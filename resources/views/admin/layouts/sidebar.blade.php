@@ -5,7 +5,7 @@
             <img src="{{ asset('/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="{{ url('/admin') }}" class="d-block">DashBoard</a>
+            <a href="{{ url('/admin') }}" class="d-block">Bảng điều khiển</a>
         </div>
     </div>
 
@@ -18,77 +18,58 @@
                 <a href="{{ url('/admin') }}" class="nav-link">
                     <i class="fas fa-chart-line"></i>
                     <p>
-                        DashBoard
+                        Bảng điều khiển
                     </p>
                 </a>
-            </li>
-            <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-icons"></i>
-                    <p>
-                        Elements
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="./index.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Elements No.1</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./index2.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Elements No.1</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./index3.html" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Elements No.1</p>
-                        </a>
-                    </li>
-                </ul>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/admin/widgets/index') }}" class="nav-link">
-                    <i class="fas fa-text-width"></i>
-                    <p>
-                        Widgets
-                        <span class="right badge badge-danger">New</span>
-                    </p>
+                <a href="./index.html" class="nav-link">
+                    <i class="fa fa-graduation-cap"></i>
+                    <p>Học viên</p>
                 </a>
             </li>
-            <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-cogs"></i>
-                    <p>
-                        Settings Options
-                        <i class="fas fa-angle-left right"></i>
-                        <span class="badge badge-info right">3</span>
-                    </p>
+            <li class="nav-item">
+                <a href="./index2.html" class="nav-link">
+                    <i class="fa fa-book"></i>
+                    <p>Môn học</p>
                 </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ url('admin/paygates/index') }}" class="nav-link">
-                            <i class="fab fa-amazon-pay"></i>
-                            <p>Paygates</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('admin/users/index') }}" class="nav-link">
-                            <i class="fas fa-users"></i>
-                            <p>Users</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('admin/menus/index') }}" class="nav-link">
-                            <i class="fas fa-bars"></i>
-                            <p>Menus</p>
-                        </a>
-                    </li>
-                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                    <i class="fa fa-table"></i>
+                    <p>Lớp học</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                    <i class="fa fa-chart-bar"></i>
+                    <p>Quá trình học</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                    <i class="fa fa-money-bill"></i>
+                    <p>Học phí</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                    <i class="fa fa-chalkboard-teacher"></i>
+                    <p>Giảng viên</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                    <i class="fa fa-gifts"></i>
+                    <p>Khuyến mại</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <p>Cảnh báo</p>
+                </a>
+            </li>
             </li>
         </ul>
     </nav>
