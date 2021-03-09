@@ -29,6 +29,38 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Menus\MenusRepositoryInterface::class,
             \App\Repositories\Menus\MenusEloquentRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\CanhBao\CanhBaoRepositoryInterface::class,
+            \App\Repositories\CanhBao\CanhBaoEloquentRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\GiangVien\GiangVienRepositoryInterface::class,
+            \App\Repositories\GiangVien\GiangVienEloquentRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\HocPhi\HocPhiRepositoryInterface::class,
+            \App\Repositories\HocPhi\HocPhiEloquentRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\HocVien\HocVienRepositoryInterface::class,
+            \App\Repositories\HocVien\HocVienEloquentRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\LopHoc\LopHocRepositoryInterface::class,
+            \App\Repositories\LopHoc\LopHocEloquentRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\MonHoc\MonHocRepositoryInterface::class,
+            \App\Repositories\MonHoc\MonHocEloquentRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\QuaTrinhHoc\QuaTrinhHocRepositoryInterface::class,
+            \App\Repositories\QuaTrinhHoc\QuaTrinhHocEloquentRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\Voucher\VoucherRepositoryInterface::class,
+            \App\Repositories\Voucher\VoucherEloquentRepository::class
+        );
     }
 
     /**
