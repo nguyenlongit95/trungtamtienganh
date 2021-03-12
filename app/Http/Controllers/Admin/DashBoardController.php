@@ -6,79 +6,106 @@ use App\Factory\NganLuong\NganLuong;
 use App\Factory\Paygates\VNPAY\VNPAY;
 use App\Factory\Paygates\Paypal\paypal_entry;
 use App\Http\Controllers\Controller;
+use App\Models\GiangVien;
+use App\Models\HocPhi;
+use App\Models\HocVien;
+use App\Models\LopHoc;
+use App\models\LuongGiangVien;
+use App\Models\QuaTrinhHoc;
+use App\Models\Voucher;
+use App\Repositories\LopHoc\LopHocRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashBoardController extends Controller
 {
-    public function __construct()
+    public function __construct(LopHocRepositoryInterface $lopHocRepository)
     {
-
     }
 
+    /**
+     * Function controller get data and render view dashboard
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
-//        $paypal = new Paypal();
-//        return $paypal->DirectPayment();
+        $totalStudent = HocVien::count();
+        $totalTeacher = GiangVien::count();
+        $totalClass = LopHoc::count();
+        $totalVoucher = Voucher::count();
 
+        $carbon = Carbon::now();
+        $lastMonth = $carbon->format('m');
+        $arrListMonth = [];
+        for ($i = 1; $i <= $lastMonth; $i++) {
+            array_push($arrListMonth, $i);
+        }
 
-        return view('admin.pages.dashboard');
+        $thuHocPhi = $this->calCulateHocPhiTheoThang($arrListMonth);
+        $luongGiangVien = $this->calculateLuongGiangVien($arrListMonth);
+        $calculateStudent = $this->calculateStudent($arrListMonth);
+
+        $lopHoc = LopHoc::whereMonth('thoi_gian_bat_dau', '>=', Carbon::now()->format('m'))
+            ->where('thoi_gian_ket_thuc', '>', Carbon::now()->format('m'))->get();
+
+        return view('admin.pages.dashboard', compact(
+            'totalStudent', 'totalTeacher', 'totalClass', 'totalVoucher',
+            'thuHocPhi', 'luongGiangVien', 'calculateStudent',
+            'lopHoc'
+        ));
     }
 
     /**
-     * Function do direct payment
+     * Function get hoc_phi has month
      *
-     * @param Request $request
+     * @param $arrListMonth
+     * @return array
      */
-    public function doDirectPayment(Request $request)
+    private function calCulateHocPhiTheoThang($arrListMonth)
     {
-        $param = array();
-        $param['txh_name'] = 'Nguyen Long';
-        $param['txt_email'] = 'nguyenlongit95@gmail.com';
-        $param['txt_phone'] = '0393803548';
-        $param['price'] = '2000';
-        $nganLuong = new NganLuong();
-        $doPayment = $nganLuong->DirectPayment($param);
-        return $doPayment;
+        $listHocPhi = [];
+        foreach ($arrListMonth as $key=>$value) {
+            $hocPhi = HocPhi::whereMonth('ngay_nop_hoc_phi', $value)->sum('hoc_phi');
+            $listHocPhi[$value] = (int) $hocPhi;
+        }
+
+        return array_values($listHocPhi);
     }
 
     /**
-     * Function success payment
+     * Function tinh toan luong giang vien theo thang
      *
-     * @param Request $request
+     * @param $arrListMonth
+     * @return array
      */
-    public function success(Request $request)
+    private function calculateLuongGiangVien($arrListMonth)
     {
-        $param = $request->all();
-        $nganluong = new NganLuong();
-        $success = $nganluong->success($param);
-        dd($success);
+        $listLuongGiangVien = [];
+        foreach ($arrListMonth as $key=>$value) {
+            $salary = LuongGiangVien::whereMonth('ngay_tra_luong', $value)->sum('luong');
+            $listLuongGiangVien[$value] = (int) $salary;
+        }
+
+        return array_values($listLuongGiangVien);
     }
 
-    public function vnPay(Request $request)
+    /**
+     * Function tinh toan so luong hoc vien theo thang
+     *
+     * @param $arrListMonth
+     * @return array
+     */
+    private function calculateStudent($arrListMonth)
     {
-        $vnPay = new VNPAY();
-        $param = array(); // vnp_OrderInfo, vnp_OrderType, vnp_Amount
-        $param['vnp_OrderInfo'] = 'Test thanh toan tren VNPay';
-        $param['vnp_OrderType'] = '100000'; // Thuc pham tieu dung
-        $param['vnp_Amount'] = 10000;
-        $payment = $vnPay->directPayment($param);
-        dd($payment);
-    }
+        $listStudent = [];
+        foreach ($arrListMonth as $key=>$value) {
+            $salary = QuaTrinhHoc::whereMonth('thoi_gian_hoc', $value)->count();
+            $listStudent[$value] = (int) $salary;
+        }
 
-    public function paypalDirectPayment(Request $request)
-    {
-        $param = [
-            'paymentType' => 'Sale',                    // Type of transaction
-            'fname' => 'John',                              // first name
-            'lname' => 'Doe',                              // last name
-            'creditCardType' => 'VISA',                     // Card type: Visa, MasterCard, Discover, Amex
-            'creditCardNumber' => '4032039069635888',                   // Card number
-            'expDateMonth' => '12',                       // Exp month on card MM
-            'expDateYear' => '2025',                        // Exp year on card YYYY
-            'cvv2Number' => '123',                         // CVV number XXX
-            'ftotal' => '1000',                             // total amount transaction
-        ];
-        $paypal = new paypal_entry();
-        dd($paypal->directPayment($param));
+        return array_values($listStudent);
     }
 }

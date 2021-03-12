@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th3 09, 2021 lúc 10:26 AM
+-- Thời gian đã tạo: Th3 12, 2021 lúc 06:45 AM
 -- Phiên bản máy phục vụ: 5.7.24
 -- Phiên bản PHP: 7.3.1
 
@@ -39,7 +39,31 @@ CREATE TABLE IF NOT EXISTS `canh_bao` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `diem_so`
+--
+
+DROP TABLE IF EXISTS `diem_so`;
+CREATE TABLE IF NOT EXISTS `diem_so` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ma_qua_trinh_hoc` int(11) NOT NULL,
+  `thoi_gian` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `diem` double DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `diem_so`
+--
+
+INSERT INTO `diem_so` (`id`, `ma_qua_trinh_hoc`, `thoi_gian`, `diem`, `created_at`, `updated_at`) VALUES
+(1, 2, '2021-03-09 17:00:00', 9, '2021-03-11 06:54:16', '2021-03-11 06:54:16');
 
 -- --------------------------------------------------------
 
@@ -52,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `giang_vien` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `tuoi` int(11) NOT NULL,
-  `dia_chi` int(11) NOT NULL,
+  `dia_chi` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ma_mon_hoc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `truong_dai_hoc` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `so_dien_thoai` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -60,7 +84,15 @@ CREATE TABLE IF NOT EXISTS `giang_vien` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `giang_vien`
+--
+
+INSERT INTO `giang_vien` (`id`, `ten`, `tuoi`, `dia_chi`, `ma_mon_hoc`, `truong_dai_hoc`, `so_dien_thoai`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'LongNguyen', 26, 'ha Noi', '1', 'PTIT', '0393803548', '2021-03-10 09:17:52', '2021-03-10 09:17:52', NULL),
+(2, 'Thanh Nhàn', 25, 'Ứng Hoà, Hà Nội', '3', 'Học Viện Công Nghệ Bưu Chính Viễn Thông', '03216548912', '2021-03-11 02:33:22', '2021-03-11 02:42:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -80,7 +112,14 @@ CREATE TABLE IF NOT EXISTS `hoc_phi` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `hoc_phi`
+--
+
+INSERT INTO `hoc_phi` (`id`, `ma_hoc_vien`, `ma_lop_hoc`, `hoc_phi`, `tinh_trang_nop_hoc_phi`, `ngay_nop_hoc_phi`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 2, 405000, 1, '2021-03-11 03:50:45', '2021-03-11 00:36:25', '2021-03-11 03:50:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -104,7 +143,15 @@ CREATE TABLE IF NOT EXISTS `hoc_vien` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `hoc_vien`
+--
+
+INSERT INTO `hoc_vien` (`id`, `ten`, `tuoi`, `email`, `dia_chi`, `thong_tin`, `so_dien_thoai`, `ten_phu_huynh`, `truong_hoc`, `trang_thai`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'LongNguyen', 26, 'nguyenlongit95@gmail.com', 'Ngọc Trục, Đại Mỗ, Nam Từ Liêm, Hà Nội', 'Đang làm tại Co-well Asia', '0393803548', 'Nguyễn Công Tường', 'PTIT', 0, '2021-03-09 21:26:15', '2021-03-09 21:51:55', NULL),
+(2, 'Thanh Nhan', 25, 'thanhnhan030796@gmail.com', 'Ha Noi', 'Đang làm tại Viettel', '123456789', 'Phạm Thị Nhâm', 'PTIT', 1, '2021-03-09 21:46:38', '2021-03-09 21:46:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -119,16 +166,51 @@ CREATE TABLE IF NOT EXISTS `lop_hoc` (
   `ma_lop` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `thong_tin` text COLLATE utf8_unicode_ci NOT NULL,
   `ma_mon_hoc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `ma_giang_vien` int(11) NOT NULL,
   `so_hoc_vien` int(11) NOT NULL,
   `thoi_gian_bat_dau` timestamp NULL DEFAULT NULL,
   `thoi_gian_ket_thuc` timestamp NULL DEFAULT NULL,
+  `gio_vao_lop` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `gio_tan_lop` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `lich_hoc` text COLLATE utf8_unicode_ci NOT NULL,
   `hoc_phi` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `lop_hoc`
+--
+
+INSERT INTO `lop_hoc` (`id`, `ten_lop`, `ma_lop`, `thong_tin`, `ma_mon_hoc`, `ma_giang_vien`, `so_hoc_vien`, `thoi_gian_bat_dau`, `thoi_gian_ket_thuc`, `gio_vao_lop`, `gio_tan_lop`, `lich_hoc`, `hoc_phi`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Kỹ thuật lập tình bài 1', 'KTLTB1', 'Đào tạo kỹ thuật lập trình cơ bản', '1', 1, 45, '2021-03-09 17:00:00', '2021-03-30 17:00:00', '2021-03-09 17:00:00', '2021-03-25 17:00:00', '[\"3\",\"4\"]', 400000, '2021-03-10 02:35:01', '2021-03-10 02:35:01', NULL),
+(2, 'C++ và hướng đối tượng', 'COOP', 'Ngôn ngữ lập trình và lập trình hướng đối tượng', '3', 1, 20, '2021-03-10 17:00:00', '2021-03-30 17:00:00', '2021-03-10 17:00:00', '2021-03-15 17:00:00', '[\"3\",\"4\"]', 450000, '2021-03-10 02:41:57', '2021-03-10 02:41:57', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `luong_giang_vien`
+--
+
+DROP TABLE IF EXISTS `luong_giang_vien`;
+CREATE TABLE IF NOT EXISTS `luong_giang_vien` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ma_giang_vien` int(11) NOT NULL,
+  `ngay_tra_luong` timestamp NULL DEFAULT NULL,
+  `luong` float DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `luong_giang_vien`
+--
+
+INSERT INTO `luong_giang_vien` (`id`, `ma_giang_vien`, `ngay_tra_luong`, `luong`, `created_at`, `updated_at`) VALUES
+(1, 2, '2021-03-17 17:00:00', 7000000, '2021-03-11 10:04:25', '2021-03-11 10:04:25');
 
 -- --------------------------------------------------------
 
@@ -159,7 +241,16 @@ CREATE TABLE IF NOT EXISTS `mon_hoc` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `mon_hoc`
+--
+
+INSERT INTO `mon_hoc` (`id`, `ten`, `ma_mon_hoc`, `thong_tin`, `created_at`, `updated_at`) VALUES
+(1, 'Kỹ thuật lập trình', 'KTLT', 'Đào tạo kỹ thuật lập trình cho sinh viên', '2021-03-10 01:29:38', '2021-03-10 01:29:38'),
+(2, 'Kỹ thuật lập trình', 'KTLTK1', 'Đào tạo kỹ thuật lập trình cho sinh viên và người đã đi làm và người già', '2021-03-10 01:36:48', '2021-03-10 01:37:58'),
+(3, 'Ngôn ngữ lập trình C++', 'CPP', 'Lập trình C++ cơ bản cho người mới bắt đầu', '2021-03-10 01:45:02', '2021-03-10 01:45:02');
 
 -- --------------------------------------------------------
 
@@ -200,16 +291,25 @@ DROP TABLE IF EXISTS `qua_trinh_hoc`;
 CREATE TABLE IF NOT EXISTS `qua_trinh_hoc` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ma_mon_hoc` int(11) NOT NULL,
+  `ma_lop_hoc` int(11) DEFAULT NULL,
   `ma_hoc_vien` int(11) NOT NULL,
   `thoi_gian_hoc` timestamp NULL DEFAULT NULL,
-  `diem_so` int(11) NOT NULL,
-  `thong_tin` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Các lưu ý của giảng viên với học viên này',
+  `diem_so` text COLLATE utf8_unicode_ci,
+  `thong_tin` text COLLATE utf8_unicode_ci COMMENT 'Các lưu ý của giảng viên với học viên này',
   `tinh_trang_hoc` int(11) NOT NULL COMMENT '1: tốt 2: trung bình 3: không tốt',
   `hoc_phi` int(11) DEFAULT NULL,
-  `created_at` int(11) NOT NULL,
-  `updated_at` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `qua_trinh_hoc`
+--
+
+INSERT INTO `qua_trinh_hoc` (`id`, `ma_mon_hoc`, `ma_lop_hoc`, `ma_hoc_vien`, `thoi_gian_hoc`, `diem_so`, `thong_tin`, `tinh_trang_hoc`, `hoc_phi`, `created_at`, `updated_at`) VALUES
+(4, 3, 2, 1, '2021-03-10 17:00:00', NULL, ' ', 1, NULL, '2021-03-11 00:36:25', '2021-03-11 00:36:25'),
+(3, 3, 2, 2, '2021-03-10 17:00:00', NULL, ' ', 1, NULL, '2021-03-11 00:29:27', '2021-03-11 00:29:27');
 
 -- --------------------------------------------------------
 
@@ -315,12 +415,20 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ma_voucher` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `giam_gia` int(11) DEFAULT NULL COMMENT 'Tính theo %',
   `thoi_gian_het_han` timestamp NULL DEFAULT NULL,
-  `trang_thai_su_dung` int(11) NOT NULL DEFAULT '1' COMMENT '1: chua su dung 0: da su dung',
+  `trang_thai_su_dung` int(11) NOT NULL DEFAULT '1' COMMENT '0: chua su dung 1: da su dung',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `voucher`
+--
+
+INSERT INTO `voucher` (`id`, `ten`, `ma_voucher`, `giam_gia`, `thoi_gian_het_han`, `trang_thai_su_dung`, `created_at`, `updated_at`) VALUES
+(2, 'Giảm 10% cho môn C++', '10PCPP', 10, '2021-03-30 17:00:00', 0, '2021-03-11 19:32:49', '2021-03-11 19:32:49');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

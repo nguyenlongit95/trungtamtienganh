@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Repositories\Voucher\VoucherRepositoryInterface;
+use App\Validations\Validation;
 use App\Voucher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,13 +11,28 @@ use App\Http\Controllers\Controller;
 class VoucherController extends Controller
 {
     /**
+     * @var VoucherRepositoryInterface
+     */
+    private $voucherRepository;
+
+    /**
+     * VoucherController constructor.
+     * @param VoucherRepositoryInterface $voucherRepository
+     */
+    public function __construct(VoucherRepositoryInterface $voucherRepository)
+    {
+        $this->voucherRepository = $voucherRepository;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $voucher = $this->voucherRepository->getAll(config('const.paginate'), 'DESC');
+        return view('admin.pages.voucher.index', compact('voucher'));
     }
 
     /**
@@ -25,7 +42,7 @@ class VoucherController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.voucher.create');
     }
 
     /**
@@ -36,51 +53,55 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        Validation::validationVoucher($request);
+        $param = $request->all();
+        $checkVoucherAlready = $this->voucherRepository->checkVoucherAlready($param);
+        if ($checkVoucherAlready === false) {
+            return redirect('/admin/voucher/create')->with('status', config('langVN.voucher.already'));
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Voucher  $voucher
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Voucher $voucher)
-    {
-        //
-    }
+        $param['trang_thai_su_dung'] = 0;
+        $create = $this->voucherRepository->create($param);
+        if ($create) {
+            return redirect('/admin/voucher/')->with('status', config('langVN.voucher.create_success'));
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Voucher  $voucher
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Voucher $voucher)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Voucher  $voucher
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Voucher $voucher)
-    {
-        //
+        return redirect('/admin/voucher/')->with('status', config('langVN.voucher.create_success'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Voucher  $voucher
+     * @param  \App\Voucher  $id
+     * @param  \App\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Voucher $voucher)
+    public function destroy(Request $request, $id)
     {
-        //
+        $voucher = $this->voucherRepository->find($id);
+        if (empty($voucher)) {
+            return redirect('/admin/voucher/')->with('status', config('langVN.voucher.delete_failed'));
+        }
+
+        $destroy = $this->voucherRepository->delete($id);
+        if ($destroy) {
+            return redirect('/admin/voucher/')->with('status', config('langVN.voucher.delete_success'));
+        }
+
+        return redirect('/admin/voucher/')->with('status', config('langVN.voucher.delete_failed'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \App\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $param = $request->all();
+        $voucher = $this->voucherRepository->search($param);
+
+        return view('admin.pages.voucher.index', compact('voucher'));
     }
 }

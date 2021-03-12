@@ -23,49 +23,49 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="./index.html" class="nav-link">
+                <a href="{{ url('/admin/hoc-vien/') }}" class="nav-link">
                     <i class="fa fa-graduation-cap"></i>
                     <p>Học viên</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a href="{{ url('/admin/mon-hoc/') }}" class="nav-link">
                     <i class="fa fa-book"></i>
                     <p>Môn học</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="{{ url('/admin/lop-hoc/') }}" class="nav-link">
                     <i class="fa fa-table"></i>
                     <p>Lớp học</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="{{ url('/admin/qua-trinh-hoc/') }}" class="nav-link">
                     <i class="fa fa-chart-bar"></i>
                     <p>Quá trình học</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="{{ url('/admin/hoc-phi/') }}" class="nav-link">
                     <i class="fa fa-money-bill"></i>
                     <p>Học phí</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="{{ url('/admin/giang-vien/') }}" class="nav-link">
                     <i class="fa fa-chalkboard-teacher"></i>
                     <p>Giảng viên</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="{{ url('/admin/voucher/') }}" class="nav-link">
                     <i class="fa fa-gifts"></i>
                     <p>Khuyến mại</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="{{ url('/admin/canh-bao/') }}" class="nav-link">
                     <i class="fa fa-exclamation-triangle"></i>
                     <p>Cảnh báo</p>
                 </a>

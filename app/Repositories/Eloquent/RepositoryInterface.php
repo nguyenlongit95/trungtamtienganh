@@ -23,4 +23,7 @@ interface RepositoryInterface
 
     //Get all data of table with relations and status
     public function getListByStatus($status, $relations = null);
+
+    // Get all record
+    public function list();
 }

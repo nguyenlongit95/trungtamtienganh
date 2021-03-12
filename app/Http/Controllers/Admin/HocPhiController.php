@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\HocPhi;
+use App\Repositories\HocPhi\HocPhiRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class HocPhiController extends Controller
 {
+    private $hocPhiRepository;
+
+    public function __construct(HocPhiRepositoryInterface $hocPhiRepository)
+    {
+        $this->hocPhiRepository = $hocPhiRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,72 +23,21 @@ class HocPhiController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\HocPhi  $hocPhi
-     * @return \Illuminate\Http\Response
-     */
-    public function show(HocPhi $hocPhi)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\HocPhi  $hocPhi
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(HocPhi $hocPhi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\HocPhi  $hocPhi
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, HocPhi $hocPhi)
-    {
-        //
+        $hocPhi = $this->hocPhiRepository->listHocPhi();
+        return view('admin.pages.hocphi.index', compact('hocPhi'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\HocPhi  $hocPhi
+     * @param  \App\HocPhi  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HocPhi $hocPhi)
+    public function search(Request $request)
     {
-        //
+        $param = $request->all();
+        $hocPhi = $this->hocPhiRepository->search($param);
+
+        return view('admin.pages.hocphi.index', compact('hocPhi'));
     }
 }

@@ -12,7 +12,8 @@ class Voucher extends Model
     protected $fillable = [
         'ten',
         'ma_voucher',
+        'giam_gia',
         'thoi_gian_het_han',
-        'trang_thai_su_dung', // 1: chua su dung 0: da su dung	
+        'trang_thai_su_dung', // 1: chua su dung 0: da su dung
     ];
 }

@@ -42,6 +42,14 @@ abstract class EloquentRepository implements RepositoryInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function list()
+    {
+        return $this->_model->get();
+    }
+
+    /**
      * Function find an record using id param
      *
      * @param int $id

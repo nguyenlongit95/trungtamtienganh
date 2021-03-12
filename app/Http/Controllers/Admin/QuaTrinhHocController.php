@@ -2,12 +2,33 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\LopHoc;
+use App\Models\MonHoc;
 use App\QuaTrinhHoc;
+use App\Repositories\HocVien\HocVienRepositoryInterface;
+use App\Repositories\QuaTrinhHoc\QuaTrinhHocRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class QuaTrinhHocController extends Controller
 {
+    private $hocVienRepository;
+    private $quaTrinhHocRepository;
+
+    /**
+     * QuaTrinhHocController constructor.
+     * @param HocVienRepositoryInterface $hocVienRepository
+     * @param QuaTrinhHocRepositoryInterface $quaTrinhHocRepository
+     */
+    public function __construct(
+        HocVienRepositoryInterface $hocVienRepository,
+        QuaTrinhHocRepositoryInterface $quaTrinhHocRepository
+    )
+    {
+        $this->hocVienRepository = $hocVienRepository;
+        $this->quaTrinhHocRepository = $quaTrinhHocRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,72 +36,102 @@ class QuaTrinhHocController extends Controller
      */
     public function index()
     {
-        //
+        $hocVien = $this->hocVienRepository->getAll(config('const.paginate'), 'DESC');
+        return view('admin.pages.quatrinhhoc.index', compact('hocVien'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Function show qua trinh hoc of an student
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function create()
+    public function show(Request $request, $id)
     {
-        //
-    }
+        $hocVien = $this->hocVienRepository->find($id);
+        if (empty($hocVien)) {
+            return redirect('/admin/qua-trinh-hoc/')->with('status', config('langVN.find_err'));
+        }
+        $quaTrinhHoc = $this->quaTrinhHocRepository->listOfStudent($hocVien->id);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\QuaTrinhHoc  $quaTrinhHoc
-     * @return \Illuminate\Http\Response
-     */
-    public function show(QuaTrinhHoc $quaTrinhHoc)
-    {
-        //
+        return view('admin.pages.quatrinhhoc.show', compact('quaTrinhHoc', 'hocVien'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\QuaTrinhHoc  $quaTrinhHoc
+     * @param  \App\QuaTrinhHoc  $id of qua trinh hoc
      * @return \Illuminate\Http\Response
      */
-    public function edit(QuaTrinhHoc $quaTrinhHoc)
+    public function edit(Request $request, $id)
     {
-        //
+        $quaTrinhHoc = $this->quaTrinhHocRepository->find($id);
+        if (empty($quaTrinhHoc)) {
+            return redirect()->back()->with('status', config('langVN.find_err'));
+        }
+        $maMM = MonHoc::find($quaTrinhHoc->ma_mon_hoc);
+        $quaTrinhHoc->mon_hoc = $maMM->ten;
+        $lophoc = LopHoc::find($quaTrinhHoc->ma_lop_hoc);
+        $quaTrinhHoc->lop_hoc = $lophoc->ten_lop;
+        $hocVien = $this->hocVienRepository->find($quaTrinhHoc->ma_hoc_vien);
+        $listMark = $this->quaTrinhHocRepository->listMarkOfStudent($id);
+        $classification = $this->quaTrinhHocRepository->classification($listMark);
+
+        return view('admin.pages.quatrinhhoc.edit', compact(
+            'quaTrinhHoc', 'maMM', 'lophoc', 'hocVien', 'listMark', 'classification'
+        ));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Controller update qua trinh hoc of an student
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\QuaTrinhHoc  $quaTrinhHoc
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id of qua trinh hoc
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, QuaTrinhHoc $quaTrinhHoc)
+    public function update(Request $request, $id)
     {
-        //
+        $param = $request->all();
+        $update = $this->quaTrinhHocRepository->update($param, $id);
+        if ($update) {
+            return redirect()->back()->with('status', config('langVN.update.success'));
+        }
+
+        return redirect()->back()->with('status', config('langVN.update.failed'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Controller mark score an student
      *
-     * @param  \App\QuaTrinhHoc  $quaTrinhHoc
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id of qua trinh hoc
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(QuaTrinhHoc $quaTrinhHoc)
+    public function mark(Request $request, $id)
     {
-        //
+        $param = $request->all();
+        if ($param['diem'] < 0 || $param['diem'] > 10) {
+            return redirect()->back()->with('status', config('langVN.mark.failed'));
+        }
+        $mark = $this->quaTrinhHocRepository->mark($id, $param);
+        if ($mark) {
+            return redirect()->back()->with('status', config('langVN.mark.success'));
+        }
+
+        return redirect()->back()->with('status', config('langVN.mark.failed'));
+    }
+
+    /**
+     * Search the specified resource in storage
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $param = $request->all();
+        $hocVien = $this->hocVienRepository->search($param);
+        return view('admin.pages.quatrinhhoc.index', compact('hocVien'));
     }
 }

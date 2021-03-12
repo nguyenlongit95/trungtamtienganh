@@ -14,9 +14,12 @@ class LopHoc extends Model
         'ma_lop',
         'thong_tin',
         'ma_mon_hoc',
+        'ma_giang_vien',
         'so_hoc_vien',
         'thoi_gian_bat_dau',
         'thoi_gian_ket_thuc',
+        'gio_vao_lop',
+        'gio_tan_lop',
         'lich_hoc',
         'hoc_phi',
     ];

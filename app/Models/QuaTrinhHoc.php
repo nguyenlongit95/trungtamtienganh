@@ -11,6 +11,7 @@ class QuaTrinhHoc extends Model
 
     protected $fillable = [
         'ma_mon_hoc',
+        'ma_lop_hoc',
         'ma_hoc_vien',
         'thoi_gian_hoc',
         'diem_so',
