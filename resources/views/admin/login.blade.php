@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>BaseApp | Admin log in</title>
+        <title>Trung tâm giáo dịch ABC</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,12 +39,12 @@
     <body class="login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('/admin/login') }}"><b>BaseApp</b></a>
+            <a href="{{ url('/admin/login') }}"><b>Trung tâm đào tạo International</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Login to admin panel</p>
+                <p class="login-box-msg">Đăng nhập vào hệ thống quản trị</p>
                 @if (count($errors) > 0)
                     <ul>
                         @foreach($errors->all() as $error)
@@ -82,7 +82,7 @@
                     <div class="row">
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                            <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
                         </div>
                         <!-- /.col -->
                     </div>
