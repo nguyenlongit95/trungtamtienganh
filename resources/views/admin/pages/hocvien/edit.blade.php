@@ -143,7 +143,7 @@
                                                     <td class="text-center">{{ $value->ngay_nop_hoc_phi }}</td>
                                                     <td class="text-center">
                                                         @if($value->tinh_trang_nop_hoc_phi === 0)
-                                                            <a onclick="_shwoModalVoucher( {{ $value->id }} )" class="btn btn-primary text-white">Nộp học phí</a>
+                                                            <a onclick="_showModalVoucher( {{ $value->id }} )" class="btn btn-primary text-white">Nộp học phí</a>
                                                         @else
                                                             <button class="btn btn-secondary">Đã nộp học phí</button>
                                                         @endif
@@ -196,9 +196,8 @@
 @section('custom-js')
     <script src="{{ asset('/js/pages/menus/menus.js') }}"></script>
     <script>
-        function _shwoModalVoucher(id) {
+        function _showModalVoucher(id) {
             let url = 'nop-hoc-phi/' + id;
-            console.log(url);
             $('#form-pay-nuition').attr('action', url);
             $('#modal-charge-nuition').modal('show');
         }
