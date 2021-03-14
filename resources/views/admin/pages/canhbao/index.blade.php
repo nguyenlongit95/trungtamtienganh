@@ -23,10 +23,6 @@
 
         <section class="content">
             <div class="col-12 float-left">
-                <div class="col-12 text-right">
-                    <a href="{{ url('/admin/canh-bao/create') }}" class="btn btn-primary text-white">Thêm cảnh báo mới</a>
-                </div>
-                <br>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">

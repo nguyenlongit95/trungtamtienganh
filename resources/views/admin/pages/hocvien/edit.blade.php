@@ -169,8 +169,9 @@
         <!-- /.content -->
         <div class="modal" id="modal-charge-nuition">
             <div class="modal-dialog">
-                <form action="" method="post" id="form-pay-nuition" enctype="multipart/form-data">
+                <form action="{{ url('/admin/hoc-vien/nop-hoc-phi/') }}" method="post" id="form-pay-nuition" enctype="multipart/form-data">
                     <div class="modal-content">
+                        <input type="text" name='id' id='id-hoc-phi' value=''>
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">Nhập mã khuyến mại nếu có</h4>
@@ -197,8 +198,7 @@
     <script src="{{ asset('/js/pages/menus/menus.js') }}"></script>
     <script>
         function _showModalVoucher(id) {
-            let url = 'nop-hoc-phi/' + id;
-            $('#form-pay-nuition').attr('action', url);
+            $('#id-hoc-phi').val(id);
             $('#modal-charge-nuition').modal('show');
         }
     </script>

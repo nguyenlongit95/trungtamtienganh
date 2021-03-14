@@ -111,8 +111,12 @@ class HocVienController extends Controller
      * @param int $id of tutition
      * @return \Illuminate\Http\Response
      */
-    public function payTuition(Request $request, $id)
+    public function payTuition(Request $request)
     {
+        $id = $request->id;
+        if ($id == null) {
+            return redirect()->back()->with('status', config('langVN.find_err'));
+        }
         $hocPhi = $this->hocPhiRepository->find($id);
         if (empty($hocPhi)) {
             return redirect()->back()->with('status', config('langVN.tuition.failed'));

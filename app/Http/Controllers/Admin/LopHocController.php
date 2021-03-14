@@ -123,7 +123,7 @@ class LopHocController extends Controller
         }
         $lichHoc = json_decode($lopHoc->lich_hoc);
         $lopHoc->lich_hoc = $lichHoc;
-
+        
         // List danh sach hoc vien
         $quaTrinhHoc =  $this->lopHocRepository->listQuaTrinhHoc($id);
 

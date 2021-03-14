@@ -49,7 +49,7 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('/{id}/edit', 'HocVienController@edit');
         Route::post('/{id}/update', 'HocVienController@update');
         Route::post('/search', 'HocVienController@search');
-        Route::post('{idhocvien}/nop-hoc-phi/{id}', 'HocVienController@payTuition');
+        Route::post('nop-hoc-phi', 'HocVienController@payTuition');
     });
 
     Route::group(['prefix' => 'mon-hoc'], function () {
@@ -108,7 +108,6 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
     Route::group(['prefix' => 'canh-bao'], function () {
         Route::get('/', 'CanhBaoController@index');
         Route::post('/search', 'CanhBaoController@search');
-        Route::get('/create', 'CanhBaoController@create');
         Route::post('/add', 'CanhBaoController@store');
         Route::get('{id}/delete', 'CanhBaoController@destroy');
     });

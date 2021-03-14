@@ -46,6 +46,7 @@ class LopHocEloquentRepository extends EloquentRepository implements LopHocRepos
     {
         $quaTrinhHoc = QuaTrinhHoc::join('hoc_vien', 'qua_trinh_hoc.ma_hoc_vien', 'hoc_vien.id')
             ->join('lop_hoc', 'qua_trinh_hoc.ma_lop_hoc', 'lop_hoc.id')
+            ->where('qua_trinh_hoc.ma_lop_hoc', $id)
             ->select(
                 'hoc_vien.ten', 'hoc_vien.tuoi', 'hoc_vien.email', 'hoc_vien.id',
                 'qua_trinh_hoc.thong_tin', 'qua_trinh_hoc.tinh_trang_hoc'
