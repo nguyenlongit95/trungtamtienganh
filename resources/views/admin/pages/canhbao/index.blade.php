@@ -24,7 +24,7 @@
         <section class="content">
             <div class="col-12 float-left">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title">Danh sách cảnh báo</h3>
 

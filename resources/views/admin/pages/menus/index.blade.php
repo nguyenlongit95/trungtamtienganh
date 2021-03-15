@@ -23,7 +23,7 @@
 
         <section class="content">
             <div class="col-12 float-left">
-                <div class="card">
+                <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Master menus</h3>
                     </div>
