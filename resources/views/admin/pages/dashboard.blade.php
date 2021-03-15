@@ -234,17 +234,18 @@
 
             var salesChartData = {
                 labels: labelSale,
-                datasets: [{
-                    label: 'Số tiền thu: ',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
-                    pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: dataSale
-                },
+                datasets: [
+                    {
+                        label: 'Số tiền thu: ',
+                        backgroundColor: 'rgba(60,141,188,0.9)',
+                        borderColor: 'rgba(60,141,188,0.8)',
+                        pointRadius: false,
+                        pointColor: '#3b8bba',
+                        pointStrokeColor: 'rgba(60,141,188,1)',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data: dataSale
+                    },
                     {
                         label: 'Số tiền chi: ',
                         backgroundColor: 'rgba(210, 214, 222, 1)',
