@@ -100,8 +100,13 @@ class QuaTrinhHocEloquentRepository extends EloquentRepository implements QuaTri
         foreach ($listMark as $mark) {
             $totalScore = $totalScore + $mark->diem;
         }
-        $classification['avg'] = number_format($totalScore / $countScore, 1);
-        $classification['rank'] = $this->_renderRank($totalScore / $countScore);
+        if ($countScore < 1) {
+            $classification['avg'] = null;
+            $classification['rank'] = 'Chưa có đánh giá';
+        } else {
+            $classification['avg'] = number_format($totalScore / $countScore, 1);
+            $classification['rank'] = $this->_renderRank($totalScore / $countScore);
+        }
 
         return $classification;
     }
