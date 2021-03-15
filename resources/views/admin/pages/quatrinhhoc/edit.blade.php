@@ -1,4 +1,4 @@
-@extends('admin.master')
+﻿@extends('admin.master')
 
 @section('custom-css')
     <link rel="stylesheet" href="{{ asset('/css/CustomStyle.css') }}">
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="diem-so">Điểm số <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="diem" id="diem-so" value="">
+                                    <input type="text" class="form-control" name="diem" id="diem-so" value="">
                                 </div>
                                 <div class="form-group">
                                     <p>- Quản lý chọn thời gian chấm điểm phía trên.</p>

@@ -111,15 +111,23 @@ class QuaTrinhHocController extends Controller
     public function mark(Request $request, $id)
     {
         $param = $request->all();
-        if ($param['diem'] < 0 || $param['diem'] > 10) {
-            return redirect()->back()->with('status', config('langVN.mark.failed'));
-        }
-        $mark = $this->quaTrinhHocRepository->mark($id, $param);
-        if ($mark) {
-            return redirect()->back()->with('status', config('langVN.mark.success'));
-        }
+	$param['diem'] = (float) $param['diem'];
+	if ($param['diem'] > 0) {
+	    if (!is_float($param['diem'])) {
+	        return redirect()->back()->with('status', config('langVN.mark.failed'));
+	    }
+            if ($param['diem'] < 0 || $param['diem'] > 10) {
+                return redirect()->back()->with('status', config('langVN.mark.failed'));
+            }
+            $mark = $this->quaTrinhHocRepository->mark($id, $param);
+            if ($mark) {
+                return redirect()->back()->with('status', config('langVN.mark.success'));
+            }
 
-        return redirect()->back()->with('status', config('langVN.mark.failed'));
+            return redirect()->back()->with('status', config('langVN.mark.failed'));
+	} else {
+	    return redirect()->back()->with('status', config('langVN.mark.failed'));
+	}
     }
 
     /**
