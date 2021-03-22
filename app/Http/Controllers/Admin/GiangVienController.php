@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\SalaryExport;
 use App\GiangVien;
 use App\Repositories\GiangVien\GiangVienRepositoryInterface;
 use App\Repositories\MonHoc\MonHocRepositoryInterface;
 use App\Validations\Validation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GiangVienController extends Controller
 {
@@ -48,6 +51,10 @@ class GiangVienController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/giang-vien')->with('status', config('langVN.permission.err'));
+        }
+
         $monHoc = $this->monHocRepository->list();
         return view('admin.pages.giangvien.create', compact('monHoc'));
     }
@@ -60,6 +67,10 @@ class GiangVienController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/giang-vien')->with('status', config('langVN.permission.err'));
+        }
+
         $param = $request->all();
         Validation::validationGiangVien($request);
         $create = $this->giangVienRepository->create($param);
@@ -71,17 +82,6 @@ class GiangVienController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\GiangVien  $giangVien
-     * @return \Illuminate\Http\Response
-     */
-    public function show(GiangVien $giangVien)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\GiangVien  $id
@@ -90,6 +90,10 @@ class GiangVienController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/giang-vien')->with('status', config('langVN.permission.err'));
+        }
+
         $giangVien = $this->giangVienRepository->find($id);
         if (empty($giangVien)) {
             return redirect('/admin/giang-vien')->with('status', config('langVN.find_err'));
@@ -109,6 +113,10 @@ class GiangVienController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/giang-vien')->with('status', config('langVN.permission.err'));
+        }
+
         $param = $request->all();
         Validation::validationGiangVien($request);
         $giangVien = $this->giangVienRepository->find($id);
@@ -132,6 +140,10 @@ class GiangVienController extends Controller
      */
     public function chargeSalary(Request $request, $id)
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/giang-vien')->with('status', config('langVN.permission.err'));
+        }
+
         $giangVien = $this->giangVienRepository->find($id);
         if (empty($giangVien)) {
             return redirect('/admin/giang-vien')->with('status', config('langVN.find_err'));
@@ -155,5 +167,22 @@ class GiangVienController extends Controller
     {
         $giangVien = $this->giangVienRepository->search($request->all());
         return view('admin.pages.giangvien.index', compact('giangVien'));
+    }
+
+    /**
+     * Function controller export salary of teacher
+     *
+     * @param Request $request
+     * @param integer $id of teacher
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function exportSalary(Request $request, $id)
+    {
+        $giangVien = $this->giangVienRepository->find($id);
+        if (empty($giangVien)) {
+            return redirect()->back()->with('status', config('langVN.find_err'));
+        }
+
+        return Excel::download(new SalaryExport($giangVien->id), 'Danh sách bảng luong của ' . $giangVien->ten . '.xlsx');
     }
 }

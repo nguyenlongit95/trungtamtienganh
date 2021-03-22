@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\HocPhiExport;
 use App\HocPhi;
 use App\Repositories\HocPhi\HocPhiRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HocPhiController extends Controller
 {
@@ -39,5 +41,18 @@ class HocPhiController extends Controller
         $hocPhi = $this->hocPhiRepository->search($param);
 
         return view('admin.pages.hocphi.index', compact('hocPhi'));
+    }
+
+    /**
+     * Controller export nuition using date asset
+     *
+     * @param Request $request
+     * @return |null
+     */
+    public function export(Request $request)
+    {
+        $param = $request->all();
+
+        return Excel::download(new HocPhiExport($param['start_time'], $param['end_time']), 'Học phí của học viên.xlsx');
     }
 }

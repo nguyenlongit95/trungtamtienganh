@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ClassStudentExport;
 use App\LopHoc;
 use App\Models\GiangVien;
 use App\Repositories\HocVien\HocVienRepositoryInterface;
@@ -12,6 +13,8 @@ use App\Validations\Validation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Support\ResponseHelper;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LopHocController extends Controller
 {
@@ -70,6 +73,10 @@ class LopHocController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/lop-hoc')->with('status', config('langVN.permission.err'));
+        }
+
         $monHoc = $this->monHocRepository->list();
         $giangVien = GiangVien::all();
         return view('admin.pages.lophoc.create', compact('monHoc', 'giangVien'));
@@ -83,6 +90,10 @@ class LopHocController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/lop-hoc')->with('status', config('langVN.permission.err'));
+        }
+
         Validation::validationLophoc($request);
         $param = $request->all();
         $lichHoc = json_encode($param['lich_hoc']);
@@ -93,17 +104,6 @@ class LopHocController extends Controller
         }
 
         return redirect()->back()->with('status', config('langVN.add.failed'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\LopHoc  $lopHoc
-     * @return \Illuminate\Http\Response
-     */
-    public function show(LopHoc $lopHoc)
-    {
-        //
     }
 
     /**
@@ -123,7 +123,7 @@ class LopHocController extends Controller
         }
         $lichHoc = json_decode($lopHoc->lich_hoc);
         $lopHoc->lich_hoc = $lichHoc;
-        
+
         // List danh sach hoc vien
         $quaTrinhHoc =  $this->lopHocRepository->listQuaTrinhHoc($id);
 
@@ -139,6 +139,10 @@ class LopHocController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Auth::user()->role !== 0) {
+            return redirect('/admin/lop-hoc')->with('status', config('langVN.permission.err'));
+        }
+
         Validation::validationLophoc($request);
         $param = $request->all();
         $lichHoc = json_encode($param['lich_hoc']);
@@ -255,5 +259,24 @@ class LopHocController extends Controller
         }
 
         return app()->make(ResponseHelper::class)->notFound();
+    }
+
+    /**
+     * Function export file excel list student of class
+     *
+     * @param Request $request
+     * @param int $id of lop_hoc
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|Excel|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
+    public function exportStudent(Request $request, $id)
+    {
+        $lopHoc = $this->lopHocRepository->find($id);
+        if (empty($lopHoc)) {
+            return redirect('/admin/lop-hoc/' . $id . '/edit')->with('status', config('langVN.find_err'));
+        }
+
+        return Excel::download(new ClassStudentExport($id), 'Danh sách học viên lớp ' . $lopHoc->ma_lop . '.xlsx');
     }
 }

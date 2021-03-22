@@ -23,9 +23,11 @@
 
         <section class="content">
             <div class="col-12 float-left">
+                @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
                 <div class="col-12 text-right">
                     <a href="{{ url('/admin/mon-hoc/create') }}" class="btn btn-primary text-white">Thêm môn học</a>
                 </div>
+                @endif
                 <br>
                 <div class="col-12">
                     <div class="card card-info">
@@ -54,7 +56,9 @@
                                     <th>Tên</th>
                                     <th class="text-center">Mã môn học</th>
                                     <th class="text-center">Thông tin môn học</th>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
                                     <th class="text-center">Thao tác</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -65,9 +69,11 @@
                                             <td>{{ $mh->ten }}</td>
                                             <td class="text-center">{{ $mh->ma_mon_hoc }}</td>
                                             <td class="text-center">{{ $mh->thong_tin }}</td>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
                                             <td class="text-center">
                                                 <a href="{{ url('/admin/mon-hoc/' . $mh->id . '/edit') }}" title="Chỉnh sửa {{ $mh->name }}"><i class="fas fa-pen"></i></a>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 @else

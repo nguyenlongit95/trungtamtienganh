@@ -7,6 +7,7 @@ use App\Validations\Validation;
 use App\Voucher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class VoucherController extends Controller
 {
@@ -42,6 +43,10 @@ class VoucherController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/voucher')->with('status', config('langVN.permission.err'));
+        }
+
         return view('admin.pages.voucher.create');
     }
 
@@ -53,6 +58,10 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/voucher')->with('status', config('langVN.permission.err'));
+        }
+
         Validation::validationVoucher($request);
         $param = $request->all();
         $checkVoucherAlready = $this->voucherRepository->checkVoucherAlready($param);
@@ -78,6 +87,10 @@ class VoucherController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        if (Auth::user()->role != 0) {
+            return redirect('/admin/voucher')->with('status', config('langVN.permission.err'));
+        }
+
         $voucher = $this->voucherRepository->find($id);
         if (empty($voucher)) {
             return redirect('/admin/voucher/')->with('status', config('langVN.voucher.delete_failed'));

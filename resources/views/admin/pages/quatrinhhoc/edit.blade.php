@@ -159,6 +159,7 @@
                                 <label for="inputEstimatedDuration">Xếp loại</label>
                                 <h2 class="text-danger font-weight-bold text-center"> {{ $classification['avg'] }} <i class="fa fa-arrow-right font-size-22"></i> {{ $classification['rank'] }} </h2>
                                 <p>- Xếp loại dựa vào điểm trung bình với các mốc sau: <span class="text-danger text-bold">A(9->10), B(7->8), C(5->7), D(<=5)</span></p>
+                                <a href="{{ url('/admin/qua-trinh-hoc/' . $quaTrinhHoc->id . '/export-mark') }}" class="btn btn-primary float-right">Xuất bảng điểm</a>
                             </div>
                         </div>
                         <!-- /.card-body -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\MarkExport;
 use App\Models\LopHoc;
 use App\Models\MonHoc;
 use App\QuaTrinhHoc;
@@ -9,6 +10,7 @@ use App\Repositories\HocVien\HocVienRepositoryInterface;
 use App\Repositories\QuaTrinhHoc\QuaTrinhHocRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QuaTrinhHocController extends Controller
 {
@@ -111,23 +113,23 @@ class QuaTrinhHocController extends Controller
     public function mark(Request $request, $id)
     {
         $param = $request->all();
-	$param['diem'] = (float) $param['diem'];
-	if ($param['diem'] > 0) {
-	    if (!is_float($param['diem'])) {
-	        return redirect()->back()->with('status', config('langVN.mark.failed'));
-	    }
-            if ($param['diem'] < 0 || $param['diem'] > 10) {
+        $param['diem'] = (float) $param['diem'];
+        if ($param['diem'] > 0) {
+            if (!is_float($param['diem'])) {
                 return redirect()->back()->with('status', config('langVN.mark.failed'));
             }
-            $mark = $this->quaTrinhHocRepository->mark($id, $param);
-            if ($mark) {
-                return redirect()->back()->with('status', config('langVN.mark.success'));
-            }
+                if ($param['diem'] < 0 || $param['diem'] > 10) {
+                    return redirect()->back()->with('status', config('langVN.mark.failed'));
+                }
+                $mark = $this->quaTrinhHocRepository->mark($id, $param);
+                if ($mark) {
+                    return redirect()->back()->with('status', config('langVN.mark.success'));
+                }
 
+                return redirect()->back()->with('status', config('langVN.mark.failed'));
+        } else {
             return redirect()->back()->with('status', config('langVN.mark.failed'));
-	} else {
-	    return redirect()->back()->with('status', config('langVN.mark.failed'));
-	}
+        }
     }
 
     /**
@@ -141,5 +143,27 @@ class QuaTrinhHocController extends Controller
         $param = $request->all();
         $hocVien = $this->hocVienRepository->search($param);
         return view('admin.pages.quatrinhhoc.index', compact('hocVien'));
+    }
+
+    /**
+     * Function controller export mark an student using id qua_trinh_hoc of student
+     *
+     * @param Request $request
+     * @param integer $id qua_trinh_hoc
+     * @return \Illuminate\Http\RedirectResponse|null
+     */
+    public function exportMark(Request $request, $id)
+    {
+        $quaTrinhHoc = $this->quaTrinhHocRepository->find($id);
+        if (empty($quaTrinhHoc)) {
+            return redirect()->back()->with('status', config('langVN.find_err'));
+        }
+
+        $hocVien = $this->hocVienRepository->find($quaTrinhHoc->ma_hoc_vien);
+        if (empty($hocVien)) {
+            return redirect()->back()->with('status', config('langVN.find_err'));
+        }
+
+        return Excel::download(new MarkExport($id), 'Bảng điểm của ' . $hocVien->ten . '.xlsx');
     }
 }

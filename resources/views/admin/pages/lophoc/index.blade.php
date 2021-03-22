@@ -23,9 +23,11 @@
 
         <section class="content">
             <div class="col-12 float-left">
+                @if(\Illuminate\Support\Facades\Auth::user()->role === 0)
                 <div class="col-12 text-right">
                     <a href="{{ url('/admin/lop-hoc/create') }}" class="btn btn-primary text-white">Thêm lớp học</a>
                 </div>
+                @endif
                 <br>
                 <div class="col-12">
                     <div class="card card-info">

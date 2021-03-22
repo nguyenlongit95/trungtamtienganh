@@ -90,6 +90,7 @@
                 <!-- ./col -->
             </div>
             <!-- /.row -->
+            @if(\Illuminate\Support\Facades\Auth::user()->role === 0)
             <!-- Main row -->
             <div class="row">
                 <!-- Left col -->
@@ -162,6 +163,7 @@
                 </section>
                 <!-- right col -->
             </div>
+            @endif
             <div class="row">
                 <div class="col-12">
                     <div class="card">

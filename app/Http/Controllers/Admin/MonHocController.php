@@ -35,6 +35,9 @@ class MonHocController extends Controller
      */
     public function create()
     {
+        if(\Auth::user()->role != 0) {
+            return redirect('/mon-hoc')->with('status', config('langVN.permission.err'));
+        }
 
         return view('admin.pages.monhoc.create');
     }
@@ -47,6 +50,10 @@ class MonHocController extends Controller
      */
     public function store(Request $request)
     {
+        if(\Auth::user()->role != 0) {
+            return redirect('/mon-hoc')->with('status', config('langVN.permission.err'));
+        }
+
         Validation::validationMonHoc($request);
         $param = $request->all();
         $create = $this->monHocRepository->create($param);
@@ -58,17 +65,6 @@ class MonHocController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\MonHoc  $monHoc
-     * @return \Illuminate\Http\Response
-     */
-    public function show(MonHoc $monHoc)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\MonHoc  $request
@@ -77,6 +73,10 @@ class MonHocController extends Controller
      */
     public function edit(Request $request, $id)
     {
+        if(\Auth::user()->role != 0) {
+            return redirect('/mon-hoc')->with('status', config('langVN.permission.err'));
+        }
+
         $monHoc = $this->monHocRepository->find($id);
         if (empty($monHoc)) {
             return redirect('/admin/mon-hoc')->with('status', config('langVN.find_err'));
@@ -94,6 +94,10 @@ class MonHocController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(\Auth::user()->role != 0) {
+            return redirect('/mon-hoc')->with('status', config('langVN.permission.err'));
+        }
+
         Validation::validationMonHoc($request);
         $param = $request->all();
         $create = $this->monHocRepository->update($param, $id);

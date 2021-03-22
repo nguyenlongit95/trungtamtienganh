@@ -71,6 +71,7 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('{id}/search-hoc-vien', 'LopHocController@searchHocVien');
         Route::get('{id}/them-hoc-vien/{lopHoc}', 'LopHocController@themHocVien');
         Route::get('/hoc-vien/{id}/kick-out', 'LopHocController@kickOut');
+        Route::get('{id}/export-student', 'LopHocController@exportStudent');
     });
 
     Route::group(['prefix' => 'qua-trinh-hoc'], function () {
@@ -80,11 +81,13 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('{id}/edit', 'QuaTrinhHocController@edit');
         Route::post('{id}/update', 'QuaTrinhHocController@update');
         Route::post('{id}/mark', 'QuaTrinhHocController@mark');
+        Route::get('{id}/export-mark', 'QuaTrinhHocController@exportMark');
     });
 
     Route::group(['prefix' => 'hoc-phi'], function () {
         Route::get('/', 'HocPhiController@index');
         Route::post('/search', 'HocPhiController@search');
+        Route::post('/export', 'HocPhiController@export');
     });
 
     Route::group(['prefix' => 'giang-vien'], function () {
@@ -95,6 +98,7 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('{id}/edit', 'GiangVienController@edit');
         Route::post('{id}/update', 'GiangVienController@update');
         Route::post('{id}/charge-salary', 'GiangVienController@chargeSalary');
+        Route::get('{id}/export-salary', 'GiangVienController@exportSalary');
     });
 
     Route::group(['prefix' => 'voucher'], function () {

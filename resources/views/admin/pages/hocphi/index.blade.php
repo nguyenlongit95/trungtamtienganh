@@ -12,6 +12,30 @@
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">Quản lý học phí</h1>
                     </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <form action="{{ url('/admin/hoc-phi/export') }}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <div class="col-md-5 float-left">
+                                <div class="col-md-3 float-left padding-top-10">
+                                    <label for="start-time" class="float-left">Từ ngày</label>
+                                </div>
+                                <div class="col-md-9 float-right">
+                                    <input type="date" required class="form-control" id="start-time" name="start_time" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-5 float-left">
+                                <div class="col-md-3 float-left padding-top-10">
+                                    <label for="end-time" class="float-left">Đến ngày</label>
+                                </div>
+                                <div class="col-md-9 float-left">
+                                    <input type="date" required class="form-control" id="end-time" name="end_time" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-2 float-right">
+                                <input type="submit" class="btn btn-warning" value="Xuất học phí">
+                            </div>
+                        </form>
+                    </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -97,4 +121,9 @@
 
 @section('custom-js')
     <script src="{{ asset('/js/pages/menus/menus.js') }}"></script>
+    <style>
+        .padding-top-10 {
+            padding-top: 10px;
+        }
+    </style>
 @endsection

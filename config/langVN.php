@@ -46,4 +46,8 @@ return [
         'delete_success' => 'Xoá mã khuyến mại thành công',
         'delete_failed' => 'Xoá mã khuyến mại thất bại',
     ],
+
+    'permission' => [
+        'err' => 'Bạn không có quyền thao tác với chức năng này!',
+    ]
 ];

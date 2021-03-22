@@ -23,9 +23,11 @@
 
         <section class="content">
             <div class="col-12 float-left">
+                @if(\Illuminate\Support\Facades\Auth::user()->role === 0)
                 <div class="col-12 text-right">
                     <a href="{{ url('/admin/voucher/create') }}" class="btn btn-primary text-white">Thêm mã khuyến mại</a>
                 </div>
+                @endif
                 <br>
                 <div class="col-12">
                     <div class="card card-info">
@@ -57,7 +59,9 @@
                                     <th class="text-center">Thông tin giảm giá</th>
                                     <th class="text-center">Thời gian hết hạn</th>
                                     <th class="text-center">Tình trạng sử dụng</th>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role === 0)
                                     <th class="text-center">Thao tác</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -76,9 +80,11 @@
                                                     <span class="text-green">Chưa sử dụng</span>
                                             @endif
                                             </td>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role === 0)
                                             <td class="text-center">
                                                 <a href="{{ url('/admin/voucher/' . $value->id . '/delete') }}" title="Chỉnh sửa {{ $value->name }}"><i class="fas fa-trash"></i></a>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 @else

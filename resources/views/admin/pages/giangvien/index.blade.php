@@ -23,9 +23,11 @@
 
         <section class="content">
             <div class="col-12 float-left">
+                @if(\Illuminate\Support\Facades\Auth::user()->role === 0)
                 <div class="col-12 text-right">
                     <a href="{{ url('/admin/giang-vien/create') }}" class="btn btn-primary text-white">Thêm giảng viên</a>
                 </div>
+                @endif
                 <br>
                 <div class="col-12">
                     <div class="card card-info">
@@ -56,7 +58,9 @@
                                     <th class="text-center">Môn học</th>
                                     <th class="text-center">Trường đại học</th>
                                     <th class="text-center">Số điện thoại</th>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role === 0)
                                     <th class="text-center">Thao tác</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -70,9 +74,11 @@
                                             <td class="text-center">{{ $value->mon_hoc }}</td>
                                             <td class="text-center">{{ $value->truong_dai_hoc }}</td>
                                             <td class="text-center">{{ $value->so_dien_thoai }}</td>
+                                            @if(\Illuminate\Support\Facades\Auth::user()->role === 0)
                                             <td class="text-center">
                                                 <a href="{{ url('/admin/giang-vien/' . $value->id . '/edit') }}"><i class="fas fa-pen"></i></a>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 @else

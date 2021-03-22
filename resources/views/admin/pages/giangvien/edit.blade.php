@@ -96,10 +96,9 @@
                 <div class="col-7 float-left">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Danh sách các lần trả lương</h3>
+                            <h3 class="card-title float-left">Danh sách các lần trả lương</h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i></button>
+                                <a href="{{ url('/admin/giang-vien/' . $giangVien->id . '/export-salary') }}" class="float-right">Xuất file excel</a>
                             </div>
                         </div>
                         <div class="card-body" style="display: block;">
@@ -138,7 +137,6 @@
                     <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title">Trả lương cho giảng viên</h3>
-
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                     <i class="fas fa-minus"></i></button>
@@ -147,7 +145,6 @@
                         <form action="{{ url('/admin/giang-vien/'. $giangVien->id .'/charge-salary') }}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="card-body">
-
                                 <div class="form-group">
                                     <label for="truong-dai-hoc">Ngày trả lương <span class="text-danger">*</span></label>
                                     <input class="form-control" type="date" name="ngay_tra_luong" value="">
@@ -156,7 +153,6 @@
                                     <label for="luong">Tiền lương <span class="text-danger">*</span></label>
                                     <input class="form-control" type="number" name="luong" value="">
                                 </div>
-
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
