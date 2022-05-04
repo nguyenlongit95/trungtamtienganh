@@ -49,7 +49,7 @@ class LopHocEloquentRepository extends EloquentRepository implements LopHocRepos
             ->where('qua_trinh_hoc.ma_lop_hoc', $id)
             ->select(
                 'hoc_vien.ten', 'hoc_vien.tuoi', 'hoc_vien.email', 'hoc_vien.id',
-                'qua_trinh_hoc.thong_tin', 'qua_trinh_hoc.tinh_trang_hoc'
+                'qua_trinh_hoc.thong_tin', 'qua_trinh_hoc.tinh_trang_hoc', 'qua_trinh_hoc.id as qua_trinh_hoc_id'
             )
             ->paginate(config('const.paginate'));
 
@@ -71,6 +71,21 @@ class LopHocEloquentRepository extends EloquentRepository implements LopHocRepos
             return false;
         }
 
+        return true;
+    }
+
+    /**
+     * Sql function check max student in class
+     *
+     * @param $lopHoc
+     * @return boolean
+     */
+    public function checkMaxStudent($lopHoc)
+    {
+        $totalStudent = QuaTrinhHoc::where('ma_lop_hoc', $lopHoc->id)->count();
+        if ($totalStudent >= $lopHoc->so_hoc_vien) {
+            return false;
+        }
         return true;
     }
 }

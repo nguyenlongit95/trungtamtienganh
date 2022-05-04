@@ -8,6 +8,7 @@ use App\Models\HocPhi;
 use App\Models\Voucher;
 use App\Repositories\Eloquent\EloquentRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class HocPhiEloquentRepository extends EloquentRepository implements HocPhiRepositoryInterface
@@ -44,6 +45,7 @@ class HocPhiEloquentRepository extends EloquentRepository implements HocPhiRepos
      *
      * @param array $param key search
      * @return mixed|void
+     * @throws \Exception
      */
     public function search($param)
     {

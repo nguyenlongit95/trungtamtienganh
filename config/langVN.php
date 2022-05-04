@@ -21,6 +21,7 @@ return [
         'failed' => 'Thêm học viên thất bại',
         'error' => 'Có lỗi hệ thống sảy ra',
         'already' => 'Học viên này đã có mặt trong lớp',
+        'max' => 'Lớp học đã đủ học viên.'
     ],
     'remove_student' => [
         'success' => 'Loại học viên thành công',

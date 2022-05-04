@@ -75,7 +75,7 @@
                         <div class="card-footer">
                             <div class="paginate float-right">
                                 @if(!empty($quaTrinhHoc))
-                                    {!! $quaTrinhHoc->render() !!}
+                                    {!! $quaTrinhHoc->appends($_GET)->links() !!}
                                 @endif
                             </div>
                         </div>

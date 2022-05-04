@@ -39,6 +39,7 @@ class DashBoardController extends Controller
 
         $carbon = Carbon::now();
         $lastMonth = $carbon->format('m');
+        $thisYear = $carbon->format('Y');
         $arrListMonth = [];
         for ($i = 1; $i <= $lastMonth; $i++) {
             array_push($arrListMonth, $i);
@@ -48,13 +49,14 @@ class DashBoardController extends Controller
         $luongGiangVien = $this->calculateLuongGiangVien($arrListMonth);
         $calculateStudent = $this->calculateStudent($arrListMonth);
 
-        $lopHoc = LopHoc::whereMonth('thoi_gian_bat_dau', '>=', Carbon::now()->format('m'))
+        $lopHoc = LopHoc::whereMonth('thoi_gian_bat_dau', '>=', $carbon->format('m'))
             ->where('thoi_gian_ket_thuc', '>', Carbon::now()->format('m'))->get();
 
         return view('admin.pages.dashboard', compact(
             'totalStudent', 'totalTeacher', 'totalClass', 'totalVoucher',
             'thuHocPhi', 'luongGiangVien', 'calculateStudent',
-            'lopHoc'
+            'lopHoc',
+            'thisYear'
         ));
     }
 

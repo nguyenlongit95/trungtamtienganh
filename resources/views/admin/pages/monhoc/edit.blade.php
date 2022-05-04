@@ -51,7 +51,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <p>- Những trường thông tin có dấu <span class="text-danger">*</span> là bắt buộc phải nhập.</p>
-                            <p>- Sau khi nhập xong thông tin trên các trường dữ liệu phía trên quản lý hãy click vào nút <span class="text-danger">(Thêm mới)</span> để chỉnh sửa môn học.</p>
+                            <p>- Sau khi nhập xong thông tin trên các trường dữ liệu phía trên quản lý hãy click vào nút <span class="text-danger">(Chỉnh sửa)</span> để chỉnh sửa môn học.</p>
                             <input type="submit" name="add" value="Chỉnh sửa" class="btn btn-primary">
                         </div>
                     </div>

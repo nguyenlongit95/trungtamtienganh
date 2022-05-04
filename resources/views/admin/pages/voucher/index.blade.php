@@ -97,7 +97,7 @@
                         <div class="card-footer">
                             <div class="paginate float-right">
                                 @if(!empty($voucher))
-                                    {!! $voucher->render() !!}
+                                    {!! $voucher->appends($_GET)->links() !!}
                                 @endif
                             </div>
                         </div>

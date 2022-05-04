@@ -90,7 +90,7 @@
                         <div class="card-footer">
                             <div class="paginate float-right">
                                 @if(!empty($hocVien))
-                                    {!! $hocVien->render() !!}
+                                    {!! $hocVien->appends($_GET)->links() !!}
                                 @endif
                             </div>
                         </div>

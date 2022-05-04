@@ -88,7 +88,7 @@
                         <div class="card-footer">
                             <div class="paginate float-right">
                                 @if(!empty($canhBao))
-                                    {!! $canhBao->render() !!}
+                                    {!! $canhBao->appends($_GET)->links() !!}
                                 @endif
                             </div>
                         </div>

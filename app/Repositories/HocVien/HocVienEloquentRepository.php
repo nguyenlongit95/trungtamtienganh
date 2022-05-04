@@ -32,7 +32,7 @@ class HocVienEloquentRepository extends EloquentRepository implements HocVienRep
             $query->where('ten', 'like', '%'. $param['ten'] . '%');
         }
 
-        return $query->paginate(config('const.paginate'));
+        return $query->orderBy('id', 'DESC')->paginate(config('const.paginate'));
     }
 
     /**

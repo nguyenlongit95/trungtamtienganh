@@ -172,7 +172,7 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ url('/admin/lop-hoc/hoc-vien/'.$value->id.'/kick-out') }}"><i class="fas fa-trash"></i></a>
+                                            <a href="{{ url('/admin/lop-hoc/hoc-vien/'.$value->qua_trinh_hoc_id.'/kick-out/') }}"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -186,10 +186,9 @@
                     <div class="card-footer">
                         <div class="paginate float-right">
                             @if(!empty($quaTrinhHoc))
-                            {!! $quaTrinhHoc->render() !!}
+                            {!! $quaTrinhHoc->appends($_GET)->links() !!}
                             @endif
                         </div>
-
                         <p>- Click vào text <span class="text-danger">Xuất danh sách học viên</span> để xuất file excel danh sách học viên</p>
                     </div>
                 </div>
@@ -199,7 +198,6 @@
                 <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Thêm học viên vào lớp</h3>
-
                         <div class="card-tools">
                             <form>
                                 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">

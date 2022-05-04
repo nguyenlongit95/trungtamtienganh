@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Trung tâm giáo dục international</title>
+        <title>Fami Education</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,7 +39,7 @@
     <body class="login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('/admin/login') }}"><b>Trung tâm đào tạo International</b></a>
+            <a href="{{ url('/admin/login') }}"><b>Fami education</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">

@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/update-password-admin', function () {
+    dd(\Illuminate\Support\Facades\Hash::make(12345678));
+});
+
 Route::group(['prefix' => '/admin', 'namespace' => '\App\Http\Controllers\Auth'], function () {
     Route::get('/login', 'LoginController@login');
     Route::post('/login', 'LoginController@postLogin');
@@ -66,7 +70,7 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('/create', 'LopHocController@create');
         Route::post('/add', 'LopHocController@store');
         Route::get('{id}/edit', 'LopHocController@edit');
-        Route::post('{id}/update', 'LopHocController@edit');
+        Route::post('{id}/update', 'LopHocController@update');
         Route::post('/search', 'LopHocController@search');
         Route::get('{id}/search-hoc-vien', 'LopHocController@searchHocVien');
         Route::get('{id}/them-hoc-vien/{lopHoc}', 'LopHocController@themHocVien');

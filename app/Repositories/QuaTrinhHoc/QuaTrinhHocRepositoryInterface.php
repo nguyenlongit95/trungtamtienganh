@@ -36,4 +36,10 @@ interface QuaTrinhHocRepositoryInterface
      * @return mixed
      */
     public function addTuition($param);
+
+    /**
+     * @param $quaTrinhHoc
+     * @return mixed
+     */
+    public function deleteCost($quaTrinhHoc);
 }

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Support\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LopHocController extends Controller
@@ -142,14 +143,13 @@ class LopHocController extends Controller
         if (Auth::user()->role !== 0) {
             return redirect('/admin/lop-hoc')->with('status', config('langVN.permission.err'));
         }
-
         Validation::validationLophoc($request);
         $param = $request->all();
         $lichHoc = json_encode($param['lich_hoc']);
         $param['lich_hoc'] = $lichHoc;
         $update = $this->lopHocRepository->update($param, $id);
         if ($update) {
-            return redirect('/admin/lop-hoc')->with('status', config('langVN.update.success'));
+            return redirect('/admin/lop-hoc/' . $id . '/edit')->with('status', config('langVN.update.success'));
         }
 
         return redirect()->back()->with('status', config('langVN.update.failed'));
@@ -173,6 +173,9 @@ class LopHocController extends Controller
         $monHoc = null;
         if (!empty($lopHoc)) {
             $monHoc = $this->monHocRepository->find($lopHoc->ma_mon_hoc);
+        }
+        if ($this->lopHocRepository->checkMaxStudent($lopHoc) === false) {
+            return redirect()->back()->with('status', config('langVN.add_student.max'));
         }
         // Check student already exits
         $checkStudent = $this->lopHocRepository->checkStudentExits($id, $lopHoc);
@@ -210,6 +213,11 @@ class LopHocController extends Controller
         $quaTrinhHoc = $this->quaTrinhHocRepository->find($id);
         if (empty($quaTrinhHoc)) {
             return redirect()->back()->with('status', config('langVN.find_err'));
+        }
+        try {
+            $this->quaTrinhHocRepository->deleteCost($quaTrinhHoc);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
         }
         $delete = $this->quaTrinhHocRepository->delete($quaTrinhHoc->id);
         if ($delete) {

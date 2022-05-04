@@ -86,7 +86,7 @@
                         <div class="card-footer">
                             <div class="paginate float-right">
                                 @if(!empty($monHoc))
-                                    {!! $monHoc->render() !!}
+                                    {!! $monHoc->appends($_GET)->links() !!}
                                 @endif
                             </div>
                         </div>

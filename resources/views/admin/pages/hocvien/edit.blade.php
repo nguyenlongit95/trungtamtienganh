@@ -171,7 +171,7 @@
             <div class="modal-dialog">
                 <form action="{{ url('/admin/hoc-vien/nop-hoc-phi/') }}" method="post" id="form-pay-nuition" enctype="multipart/form-data">
                     <div class="modal-content">
-                        <input type="text" name='id' id='id-hoc-phi' value=''>
+                        <input type="hidden" name='id' id='id-hoc-phi' value=''>
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">Nhập mã khuyến mại nếu có</h4>

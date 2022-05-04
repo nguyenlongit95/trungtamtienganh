@@ -154,4 +154,18 @@ class QuaTrinhHocEloquentRepository extends EloquentRepository implements QuaTri
             return '-';
         }
     }
+
+    /**
+     * Delete cost of class and student's
+     *
+     * @param $quaTrinhHoc
+     * @return int|mixed
+     */
+    public function deleteCost($quaTrinhHoc)
+    {
+        return DB::table('hoc_phi')->where('ma_hoc_vien', $quaTrinhHoc->ma_hoc_vien)
+            ->where('ma_lop_hoc', $quaTrinhHoc->ma_lop_hoc)
+            ->where('tinh_trang_nop_hoc_phi', 0)
+            ->delete();
+    }
 }

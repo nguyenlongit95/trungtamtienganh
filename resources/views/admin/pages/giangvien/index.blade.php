@@ -91,7 +91,7 @@
                         <div class="card-footer">
                             <div class="paginate float-right">
                                 @if(!empty($giangVien))
-                                    {!! $giangVien->render() !!}
+                                    {!! $giangVien->appends($_GET)->links() !!}
                                 @endif
                             </div>
                         </div>

@@ -123,6 +123,7 @@
                             </div>
                         </div><!-- /.card-body -->
                         <div class="card-footer">
+                            <p>- Biểu đồ thống kê theo năm: <span class="text-danger">{{ $thisYear }}</span></p>
                             <p>- Miền biểu đồ có màu <span class="font-weight-bold" style="color:rgba(210, 214, 222, 1)">xám</span> biểu thị số tiền phải trả cho giảng viên, công nhân viên. <span class="text-danger">*</span></p>
                             <p>- Miền biểu đồ có màu <span class="font-weight-bold" style="color:rgba(60,141,188,0.9);">xanh</span> biểu thị số tiền học phí thu được từ học viên và các dịch vụ khác. <span class="text-danger">*</span></p>
                         </div>
@@ -154,6 +155,7 @@
                         </div>
                         <!-- /.card-footer -->
                         <div class="card-footer">
+                            <p>- Biểu đồ thống kê theo năm: <span class="text-white font-weight-bold">{{ $thisYear }}</span></p>
                             <p>- Biểu đồ trên thể hiện số lượng học viên đang theo học của các tháng. <span class="text-danger">*</span></p>
                             <p>- Số lượng học viên sẽ được thống kê theo từng tháng và theo các lớp học. <span class="text-danger">*</span></p>
                         </div>
@@ -188,7 +190,7 @@
                                     @foreach($lopHoc as $value)
                                         <tr>
                                             <td>{{ $value->id }}</td>
-                                            <td>{{ $value->ten_lop }}</td>
+                                            <td><a href="{{ url('/admin/lop-hoc/' . $value->id . '/edit') }}">{{ $value->ten_lop }}</a></td>
                                             <td>{{ $value->ma_lop }}</td>
                                             <td><span class="tag tag-success">{{ $value->so_hoc_vien }}</span></td>
                                             <td>{{ $value->thoi_gian_bat_dau }}</td>
