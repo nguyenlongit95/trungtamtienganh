@@ -81,10 +81,14 @@ class HocVienController extends Controller
     {
         $param = $request->all();
         Validation::validationHocVien($request);
+        dd($param);
         $param['trang_thai'] = 1;
         $param['email'] = "";
         $create = $this->hocvienRepository->create($param);
         if ($create) {
+            // Add to class
+
+            // Purchase
             return redirect('/admin/hoc-vien')->with('status', config('langVN.add.success'));
         } else {
             return redirect()->back()->with('status', config('langVN.add.failed'));
@@ -227,6 +231,11 @@ class HocVienController extends Controller
         return "errors";
     }
 
+    /**
+     * @param Request $request
+     * @return |null
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     public function getLopHocBill(Request $request)
     {
         $param = $request->all();
