@@ -7,6 +7,8 @@ namespace App\Repositories\LopHoc;
 use App\Models\LopHoc;
 use App\Repositories\Eloquent\EloquentRepository;
 use App\Models\QuaTrinhHoc;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class LopHocEloquentRepository extends EloquentRepository implements LopHocRepositoryInterface
 {
@@ -87,5 +89,28 @@ class LopHocEloquentRepository extends EloquentRepository implements LopHocRepos
             return false;
         }
         return true;
+    }
+
+    /**
+     * Sql function list all lop_hoc using id mon_hoc
+     *
+     * @param int $idMonHoc
+     * @return \Illuminate\Support\Collection
+     */
+    public function listAllLopHoc($idMonHoc)
+    {
+        $listLopHoc = DB::table('lop_hoc')->where('ma_mon_hoc', $idMonHoc)
+            ->whereNull('deleted_at')->where('thoi_gian_ket_thuc', '>',  Carbon::now())
+            ->orderBy('id', 'ASC')->get();
+        if (!empty($listLopHoc)) {
+            foreach ($listLopHoc as $lopHoc) {
+                if ($this->checkMaxStudent($lopHoc) === false) {
+                    $lopHoc->max_student = "full";
+                } else {
+                    $lopHoc->max_student = "ok";
+                }
+            }
+        }
+        return $listLopHoc;
     }
 }

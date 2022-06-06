@@ -17,4 +17,10 @@ interface VoucherRepositoryInterface
      * @return mixed
      */
     public function search($param);
+
+    /**
+     * @param $voucher
+     * @return mixed
+     */
+    public function checkVoucher($voucher);
 }

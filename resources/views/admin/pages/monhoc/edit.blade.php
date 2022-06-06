@@ -44,7 +44,7 @@
                                 <input type="text" id="ma-mon-hoc" name="ma_mon_hoc" class="form-control" value="{{ $monHoc->ma_mon_hoc }}">
                             </div>
                             <div class="form-group">
-                                <label for="thong-tin">Thông tin môn học</label> <span class="text-danger">*</span>
+                                <label for="thong-tin">Thông tin môn học</label>
                                 <textarea class="form-control" name="thong_tin" id="thong-tin" cols="30" rows="10">{{ $monHoc->thong_tin }}</textarea>
                             </div>
                         </div>

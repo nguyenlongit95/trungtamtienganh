@@ -6,6 +6,8 @@ namespace App\Repositories\Voucher;
 
 use App\Models\Voucher;
 use App\Repositories\Eloquent\EloquentRepository;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class VoucherEloquentRepository extends EloquentRepository implements VoucherRepositoryInterface
 {
@@ -50,5 +52,20 @@ class VoucherEloquentRepository extends EloquentRepository implements VoucherRep
         }
 
         return $voucher->paginate(config('const.paginate'));
+    }
+
+    /**
+     * Sql function check voucher already and can use it
+     *
+     * @param string $voucher
+     * @return mixed
+     */
+    public function checkVoucher($voucher)
+    {
+        //1: chua su dung 0: da su dung
+        return DB::table('voucher')->where('ma_voucher', $voucher)
+            ->where('trang_thai_su_dung', 1)
+            ->where('thoi_gian_het_han', '>=', Carbon::now())
+            ->first();
     }
 }

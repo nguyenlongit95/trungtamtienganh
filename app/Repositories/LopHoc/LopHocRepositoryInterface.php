@@ -30,4 +30,10 @@ interface LopHocRepositoryInterface
      * @return mixed
      */
     public function checkMaxStudent($lopHoc);
+
+    /**
+     * @param $idMonHoc
+     * @return mixed
+     */
+    public function listAllLopHoc($idMonHoc);
 }

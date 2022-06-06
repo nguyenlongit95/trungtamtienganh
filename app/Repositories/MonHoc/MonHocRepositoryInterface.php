@@ -11,4 +11,9 @@ interface MonHocRepositoryInterface
      * @return mixed
      */
     public function search($param);
+
+    /**
+     * @return mixed
+     */
+    public function listAllMH();
 }

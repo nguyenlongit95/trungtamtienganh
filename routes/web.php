@@ -54,6 +54,10 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::post('/{id}/update', 'HocVienController@update');
         Route::post('/search', 'HocVienController@search');
         Route::post('nop-hoc-phi', 'HocVienController@payTuition');
+        Route::get('/get-lop-hoc', 'HocVienController@getAllLopHoc');
+        Route::get('/get-gia-tien-lop-hoc', 'HocVienController@getPriceOfClass');
+        Route::get('/check-voucher', 'HocVienController@checkVoucher');
+        Route::get('/get-lop-hoc-bill', 'HocVienController@getLopHocBill');
     });
 
     Route::group(['prefix' => 'mon-hoc'], function () {

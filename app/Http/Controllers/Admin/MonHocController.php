@@ -56,6 +56,7 @@ class MonHocController extends Controller
 
         Validation::validationMonHoc($request);
         $param = $request->all();
+        $param['thong_tin'] = "";
         $create = $this->monHocRepository->create($param);
         if ($create) {
             return redirect('/admin/mon-hoc')->with('status', config('langVN.add.success'));
@@ -100,6 +101,7 @@ class MonHocController extends Controller
 
         Validation::validationMonHoc($request);
         $param = $request->all();
+        $param['thong_tin'] = "";
         $create = $this->monHocRepository->update($param, $id);
         if ($create) {
             return redirect('/admin/mon-hoc')->with('status', config('langVN.update.success'));

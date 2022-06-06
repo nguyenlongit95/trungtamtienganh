@@ -44,10 +44,6 @@
                                     <input type="number" id="tuoi" name="tuoi" class="form-control" value="{{  $hocVien->tuoi }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label> <span class="text-danger">*</span>
-                                    <input type="email" id="email" name="email" class="form-control" value="{{ $hocVien->email }}">
-                                </div>
-                                <div class="form-group">
                                     <label for="dia-chi">Địa chỉ</label> <span class="text-danger">*</span>
                                     <input type="text" id="dia-chi" name="dia_chi" class="form-control" value="{{ $hocVien->dia_chi }}">
                                 </div>
@@ -78,11 +74,15 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="thong-tin">Thông tin thêm</label>
-                                    <textarea class="form-control" name="thong_tin" id="thong-tin" cols="30" rows="10">{{ $hocVien->thong_tin }}</textarea>
+                                    <textarea class="form-control" name="thong_tin" id="thong-tin" cols="30" rows="5">{{ $hocVien->thong_tin }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="ten-phi-huynh">Tên phụ huynh</label>
                                     <input type="text" id="ten-phu-huynh" name="ten_phu_huynh" class="form-control" value="{{ $hocVien->ten_phu_huynh }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" value="{{ $hocVien->email }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="truong-hoc">Trường đang theo học</label>

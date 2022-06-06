@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Repositories\MonHoc;
-
 
 use App\Models\MonHoc;
 use App\Repositories\Eloquent\EloquentRepository;
+use Illuminate\Support\Facades\DB;
 
 class MonHocEloquentRepository extends EloquentRepository implements MonHocRepositoryInterface
 {
@@ -29,5 +28,15 @@ class MonHocEloquentRepository extends EloquentRepository implements MonHocRepos
         }
 
         return $query->paginate(config('const.paginate'));
+    }
+
+    /**
+     * Sql function list all mon_hoc
+     *
+     * @return mixed
+     */
+    public function listAllMH()
+    {
+        return DB::table('mon_hoc')->orderBy('id', 'ASC')->get();
     }
 }

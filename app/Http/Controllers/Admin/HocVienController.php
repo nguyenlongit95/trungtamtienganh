@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\HocVien;
 use App\Repositories\HocPhi\HocPhiRepositoryInterface;
 use App\Repositories\HocVien\HocVienRepositoryInterface;
+use App\Repositories\LopHoc\LopHocRepositoryInterface;
+use App\Repositories\MonHoc\MonHocRepositoryInterface;
+use App\Repositories\Voucher\VoucherRepositoryInterface;
+use App\Support\ResponseHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,16 +16,36 @@ use App\Validations\Validation;
 
 class HocVienController extends Controller
 {
+    /**
+     * @var HocVienRepositoryInterface
+     */
     private $hocvienRepository;
     private $hocPhiRepository;
+    private $monHocRepository;
+    private $lopHocRepository;
+    private $voucherRepository;
 
+    /**
+     * HocVienController constructor.
+     * @param HocVienRepositoryInterface $hocVienRepository
+     * @param HocPhiRepositoryInterface $hocPhiRepository
+     * @param MonHocRepositoryInterface $monHocRepository
+     * @param LopHocRepositoryInterface $lopHocRepository
+     * @param VoucherRepositoryInterface $voucherRepository
+     */
     public function __construct(
         HocVienRepositoryInterface $hocVienRepository,
-        HocPhiRepositoryInterface $hocPhiRepository
+        HocPhiRepositoryInterface $hocPhiRepository,
+        MonHocRepositoryInterface $monHocRepository,
+        LopHocRepositoryInterface $lopHocRepository,
+        VoucherRepositoryInterface $voucherRepository
     )
     {
         $this->hocvienRepository = $hocVienRepository;
         $this->hocPhiRepository = $hocPhiRepository;
+        $this->monHocRepository = $monHocRepository;
+        $this->lopHocRepository = $lopHocRepository;
+        $this->voucherRepository = $voucherRepository;
     }
 
     /**
@@ -42,7 +66,8 @@ class HocVienController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.hocvien.create');
+        $monHoc = $this->monHocRepository->listAllMH();
+        return view('admin.pages.hocvien.create', compact('monHoc'));
     }
 
     /**
@@ -57,7 +82,7 @@ class HocVienController extends Controller
         $param = $request->all();
         Validation::validationHocVien($request);
         $param['trang_thai'] = 1;
-
+        $param['email'] = "";
         $create = $this->hocvienRepository->create($param);
         if ($create) {
             return redirect('/admin/hoc-vien')->with('status', config('langVN.add.success'));
@@ -95,7 +120,7 @@ class HocVienController extends Controller
     {
         $param = $request->all();
         Validation::validationHocVien($request);
-
+        $param['email'] = "";
         $update = $this->hocvienRepository->update($param, $id);
         if ($update) {
             return redirect('/admin/hoc-vien')->with('status', config('langVN.update.success'));
@@ -154,5 +179,61 @@ class HocVienController extends Controller
         $param = $request->all();
         $hocVien = $this->hocvienRepository->search($param);
         return view('admin.pages.hocvien.index', compact('hocVien'));
+    }
+
+    /**
+     * Controller function render view get all lop_hoc using id mon_hoc and pass param ajax
+     *
+     * @param Request $request
+     * @return array|string
+     * @throws \Throwable
+     */
+    public function getAllLopHoc(Request $request)
+    {
+        $param = $request->all();
+        $listLopHoc = $this->lopHocRepository->listAllLopHoc($param['idMonHoc']);
+        return view('admin.pages.hocvien.partials.listAllLopHoc', compact('listLopHoc'))->render();
+    }
+
+    /**
+     * Controller function get hoc_phi using id_+lop_hoc
+     *
+     * @param Request $request
+     * @return |null
+     */
+    public function getPriceOfClass(Request $request)
+    {
+        $param = $request->all();
+        $lopHoc = $this->lopHocRepository->find($param['idLopHoc']);
+        if (!empty($lopHoc)) {
+            return $lopHoc->hoc_phi;
+        }
+        return null;
+    }
+
+    /**
+     * Controller function check voucher already
+     *
+     * @param Request $request
+     * @return |null
+     */
+    public function checkVoucher(Request $request)
+    {
+        $param = $request->all();
+        $checkVoucher = $this->voucherRepository->checkVoucher($param['voucher']);
+        if ($checkVoucher) {
+            return $checkVoucher->giam_gia;
+        }
+        return "errors";
+    }
+
+    public function getLopHocBill(Request $request)
+    {
+        $param = $request->all();
+        $lopHoc = $this->lopHocRepository->find($param['lop_hoc']);
+        if (!empty($lopHoc)) {
+            return app()->make(ResponseHelper::class)->success($lopHoc);
+        }
+        return null;
     }
 }
