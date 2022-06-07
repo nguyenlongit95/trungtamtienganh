@@ -13,6 +13,7 @@ use App\Validations\Validation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Support\ResponseHelper;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
@@ -147,6 +148,12 @@ class LopHocController extends Controller
         $param = $request->all();
         $lichHoc = json_encode($param['lich_hoc']);
         $param['lich_hoc'] = $lichHoc;
+        if (!empty($param['thoi_gian_bat_dau'])) {
+            $param['thoi_gian_bat_dau'] = Carbon::create($param['thoi_gian_bat_dau']);
+        }
+        if (!empty($param['thoi_gian_ket_thuc'])) {
+            $param['thoi_gian_ket_thuc'] = Carbon::create($param['thoi_gian_ket_thuc']);
+        }
         $update = $this->lopHocRepository->update($param, $id);
         if ($update) {
             return redirect('/admin/lop-hoc/' . $id . '/edit')->with('status', config('langVN.update.success'));
