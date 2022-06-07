@@ -170,7 +170,7 @@
                 </form>
             </div>
             <hr>
-            <div class="col-12 float-left" style="visibility: hidden;">
+            <div class="col-12 float-left" style="opacity: 0">
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
                 <form class="form" style="max-width: none; width: 420px; line-height: 16px">
                     <p>Anh ngữ Germ</p>
@@ -203,7 +203,7 @@
                         </tr>
                         <tr>
                             <td class="text-left" style="width: 100px;">Từ ngày</td>
-                            <td class="text-right" style="width: 320px;" id="bill-start-date">13/08/1995</td>
+                            <td class="text-right" style="width: 320px;" id="bill-start-date">Demoabababa</td>
                         </tr>
                         <tr>
                             <td class="text-left" style="width: 100px;">Số tiền nộp</td>
@@ -260,7 +260,6 @@
                         alert('Không tìm được dữ liệu lớp học. Hãy kiển tra lại hệ thống.');
                     } else {
                         $('#bill-lop-hoc').text(res.data.ten_lop); // Call server get class name
-                        $('#bill-start-date').text(res.data.thoi_gian_bat_dau); // Call server get start date of class
                     }
                 }
             });
@@ -341,9 +340,10 @@
                         idLopHoc:  $(this).val()
                     }, success: function (response) {
                         if (response !== null) {
-                            $('#input-hoc-phi').val(response);
-                            $('#hoc_phi').val(response);
+                            $('#input-hoc-phi').val(response.data.hoc_phi);
+                            $('#hoc_phi').val(response.data.hoc_phi);
                             $('#preview-print').removeAttr('disabled');
+                            $('#bill-start-date').text(response.data.thoi_gian_bat_dau);
                         } else {
                             alert('Không truy xuất được học phí của lớp học, kiểm tra lại hệ thống!');
                             $('#preview-print').attr('disabled');
