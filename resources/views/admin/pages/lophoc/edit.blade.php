@@ -159,7 +159,7 @@
                                 <tbody>
                                     <tr>
                                         <td>{{ $value->ten }}</td>
-                                        <td class="text-center">{{ $value->tuoi }}</td>
+                                        <td class="text-center">{{ $value->ngay_sinh }}</td>
                                         <td class="text-center">{{ $value->email }}</td>
                                         <td class="text-center">{{ $value->thong_tin }}</td>
                                         <td class="text-center">

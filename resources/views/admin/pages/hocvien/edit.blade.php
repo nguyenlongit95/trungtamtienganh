@@ -40,8 +40,8 @@
                                     <input type="text" id="ten" name="ten" class="form-control" value="{{  $hocVien->ten }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="tuoi">Tuổi</label> <span class="text-danger">*</span>
-                                    <input type="number" id="tuoi" name="tuoi" class="form-control" value="{{  $hocVien->tuoi }}">
+                                    <label for="tuoi">Ngày sinh</label> <span class="text-danger">*</span>
+                                    <input type="number" id="tuoi" name="ngay_sinh" class="form-control" value="{{  $hocVien->ngay_sinh }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="dia-chi">Địa chỉ</label> <span class="text-danger">*</span>
@@ -149,6 +149,8 @@
                                                         @endif
                                                     </td>
                                                 </tr>
+                                                <input type="hidden" id="txt_ten_lop_{{ $value->id }}" value="{{ $value->lop_hoc }}">
+                                                <input type="hidden" id="txt_hoc_phi_{{ $value->id }}" value="{{ $value->hoc_phi }}">
                                             @endforeach
                                         @else
                                         <p class="text-danger">Chưa có học phí cần phải nộp</p>
@@ -180,15 +182,75 @@
                         <!-- Modal body -->
                         <div class="modal-body">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <textarea name="voucher" class="form-control" id="" cols="30" rows="10"></textarea>
+                            <textarea name="voucher" class="form-control" id="" cols="30" rows="3" onchange="checkVoucher($(this).val())"></textarea>
+                            <p class="text-hide text-danger" id="txt-danger-alert"></p>
+                            <br>
+                            <label for="hoc-phi">Số tiền phải nộp <span class="text-danger">*</span></label>
+                            <input type="text" readonly value="" class="form-control" id="hoc-phi">
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <input type="button" id="preview-print" value="Xem in" class="btn btn-secondary" onclick="previewPrint()">
                             <button type="submit" class="btn btn-primary">Nộp học phí</button>
                         </div>
                     </div>
                 </form>
+                <div class="col-12 float-left" style="opacity: 0">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+                    <form class="form" style="max-width: none; width: 420px; line-height: 16px; padding-left: 150px">
+                        <p>Anh ngữ Germ</p>
+                        <p style="margin-left: 180px;">PHIẾU THU</p>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Họ và tên</td>
+                                <td class="text-right" style="width: 320px;" id="bill-ho-ten">{{ $hocVien->ten }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Tuổi</td>
+                                <td class="text-right" style="width: 320px;" id="bill-tuoi">{{ $hocVien->ngay_sinh }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Địa chỉ</td>
+                                <td class="text-right" style="width: 320px;" id="bill-dia-chi">{{ $hocVien->dia_chi }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Điện thoại</td>
+                                <td class="text-right" style="width: 320px;" id="bill-so-dien-thoai">{{ $hocVien->so_dien_thoai }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Email</td>
+                                <td class="text-right" style="width: 320px;" id="bill-email">{{ $hocVien->email }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Học lớp</td>
+                                <td class="text-right" style="width: 320px;" id="bill-lop-hoc">Tiếng Anh 3</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Từ ngày</td>
+                                <td class="text-right" style="width: 320px;" id="bill-start-date">13/08/1995</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Số tiền nộp</td>
+                                <td class="text-right" style="width: 320px;" id="bill-hoc-phi">6000000</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left" style="width: 100px;">Ghi chú</td>
+                                <td class="text-right" style="width: 320px;"></td>
+                            </tr>
+                            <tr style="margin-top:15px;">
+                                <td class="text-left" style="width: 150px; padding-top: 15px; padding-left: 15px;">Người nộp tiền</td>
+                                <td class="text-right" style="width: 320px; padding-top: 15px; padding-right: 15px;">Hà Nội: ngày...tháng...năm....</td>
+                            </tr>
+                            <tr style="margin-top:15px;">
+                                <td class="text-left" style="width: 150px; padding-top: 15px; padding-left: 15px;"></td>
+                                <td class="text-right" style="width: 320px; padding-top: 15px; padding-right: 55px;">Người thu tiền</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -200,6 +262,100 @@
         function _showModalVoucher(id) {
             $('#id-hoc-phi').val(id);
             $('#modal-charge-nuition').modal('show');
+            $('#hoc-phi').val($('#txt_hoc_phi_' + id).val());
         }
+
+        function previewPrint() {
+            let idHocPhi = $('#id-hoc-phi').val();
+            /**
+             * Call server get lop_hoc
+             */
+            $.ajax({
+                url: '{{ url('/admin/hoc-vien/get-lop-hoc-using-qua-hoc-phi') }}',
+                type: 'GET',
+                data: {
+                    idHocPhi: idHocPhi
+                },success: function (response) {
+                    if (response !== null) {
+                        $('#bill-lop-hoc').text(response.data.ten_lop);
+                        $('#bill-start-date').text(response.data.thoi_gian_bat_dau);
+                        $('#bill-hoc-phi').text($('#hoc-phi').val());
+                    }
+                }
+            });
+        }
+
+        function checkVoucher(voucher) {
+            if(voucher === '') {
+                $('#txt-danger-alert').addClass('text-hide');
+            } else {
+                /**
+                 * Call server check voucher and show price
+                 */
+                $.ajax({
+                    url: '{{ url('/admin/hoc-vien/check-voucher') }}',
+                    type: 'GET',
+                    data: {
+                        voucher: voucher
+                    }, success: function (response) {
+                        if (response === 'errors') {
+                            $('#txt-danger-alert').text('Voucher không hợp lệ, hãy kiểm tra lại!');
+                            $('#txt-danger-alert').removeClass('text-hide');
+                            $('#txt-danger-alert').addClass('text-danger');
+                            $('#txt-danger-alert').removeClass('text-success');
+                            $('#hoc_phi').val($('#input-hoc-phi').val());
+                        } else {
+                            $('#txt-danger-alert').text('Áp dụng voucher thành công.');
+                            $('#txt-danger-alert').removeClass('text-danger');
+                            $('#txt-danger-alert').removeClass('text-hide');
+                            $('#txt-danger-alert').addClass('text-success');
+                            // Upgrade hoc phi
+                            let oldHP = $('#hoc-phi').val();
+                            let calPer = (oldHP * 10) / 100;alert(calPer);
+                            alert(calPer);
+                            $('#hoc-phi').val(oldHP - calPer);
+                            $('#bill-hoc-phi').text(oldHP - calPer);
+                        }
+                    }
+                });
+            }
+        }
+
+        /**
+         * Export PDF here
+         */
+        (function () {
+            var
+                form = $('.form'),
+                cache_width = form.width(),
+                a4 = [595.28, 841.89]; // for a4 size paper width and height
+
+            $('#preview-print').on('click', function () {
+                $('body').scrollTop(0);
+                createPDF();
+            });
+            //create pdf
+            function createPDF() {
+                getCanvas().then(function (canvas) {
+                    var
+                        img = canvas.toDataURL("image/png"),
+                        doc = new jsPDF({
+                            unit: 'px',
+                            format: 'a4'
+                        });
+                    doc.addImage(img, 'JPEG', 5, 5);
+                    doc.save('Hóa_đơn_'+$('#bill-ho-ten').text()+'.pdf');
+                    form.width(cache_width);
+                });
+            }
+            // create canvas object
+            function getCanvas() {
+                form.width((a4[0] * 1.33333) - 0).css('max-width', 'none');
+                return html2canvas(form, {
+                    imageTimeout: 2000,
+                    removeContainer: true
+                });
+            }
+        }());
     </script>
 @endsection

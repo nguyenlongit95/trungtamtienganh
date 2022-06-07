@@ -13,14 +13,12 @@ class Validation
     {
         $request->validate([
             'ten' => 'required',
-            'tuoi' => 'required',
-            'email' => 'required',
+            'ngay_sinh' => 'required',
             'dia_chi' => 'required',
             'so_dien_thoai' => 'required',
         ], [
             'ten.required' => 'Hãy nhập tên học viên',
-            'tuoi.required' => 'Hãy nhập tuổi học viên',
-            'email.required' => 'Nhập Email của học viên',
+            'ngay_sinh.required' => 'Hãy nhập tuổi học viên',
             'dia_chi.required' => 'Nhập thông tin địa chỉ của học viên',
             'so_dien_thoai.required' => 'Nhập số điện thoại của học viên',
         ]);
@@ -68,14 +66,12 @@ class Validation
     {
         $request->validate([
             'ten' => 'required',
-            'tuoi' => 'required',
             'dia_chi' => 'required',
             'ma_mon_hoc' => 'required',
             'truong_dai_hoc' => 'required',
             'so_dien_thoai' => 'required',
         ], [
             'ten.required' => 'Nhập tên giảng viên.',
-            'tuoi.required' => 'Nhập tuổi giảng viên',
             'dia_chi.required' => 'Nhập địa chỉ của giảng viên',
             'ma_mon_hoc.required' => 'Chọn môn học giảng viên phụ trách',
             'truong_dai_hoc.required' => 'Nhập trường đại học của giảng viên đã theo học.',

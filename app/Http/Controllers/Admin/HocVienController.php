@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Validations\Validation;
+use Illuminate\Support\Facades\DB;
 
 class HocVienController extends Controller
 {
@@ -81,14 +82,30 @@ class HocVienController extends Controller
     {
         $param = $request->all();
         Validation::validationHocVien($request);
-        dd($param);
         $param['trang_thai'] = 1;
         $param['email'] = "";
         $create = $this->hocvienRepository->create($param);
+        $lopHoc = $this->lopHocRepository->find($param['lop-hoc']);
         if ($create) {
             // Add to class
-
-            // Purchase
+            DB::table('qua_trinh_hoc')->insert([
+                'ma_mon_hoc' => $param['mon-hoc'],
+                'ma_lop_hoc' => $param['lop-hoc'],
+                'ma_hoc_vien' => $create->id,
+                'thoi_gian_hoc' => $lopHoc->thoi_gian_bat_dau,
+                'diem_so' => null,
+                'thong_tin' => '',
+                'tinh_trang_hoc' => 1,
+                'hoc_phi' => null,
+            ]);
+            // Purchase course
+            DB::table('hoc_phi')->insert([
+                'ma_hoc_vien' => $create->id,
+                'ma_lop_hoc' => $param['lop-hoc'],
+                'hoc_phi' => $param['hoc_phi'],
+                'tinh_trang_nop_hoc_phi' => 1,
+                'ngay_nop_hoc_phi' => Carbon::now(),
+            ]);
             return redirect('/admin/hoc-vien')->with('status', config('langVN.add.success'));
         } else {
             return redirect()->back()->with('status', config('langVN.add.failed'));
@@ -244,5 +261,24 @@ class HocVienController extends Controller
             return app()->make(ResponseHelper::class)->success($lopHoc);
         }
         return null;
+    }
+
+    /**
+     * @param Request $request
+     * @return |null
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function getLophocUsingHocPhi(Request $request)
+    {
+        $param = $request->all();
+        $hocPhi = DB::table('hoc_phi')->find($param['idHocPhi']);
+        if (empty($hocPhi)) {
+            return null;
+        }
+        $lopHoc = DB::table('lop_hoc')->find($hocPhi->ma_lop_hoc);
+        if (empty($lopHoc)) {
+            return null;
+        }
+        return app()->make(ResponseHelper::class)->success($lopHoc);
     }
 }

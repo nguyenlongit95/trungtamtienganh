@@ -10,8 +10,8 @@ class HocVien extends Model
     protected $table='hoc_vien';
 
     protected $fillable = [
-        'ten', 
-        'tuoi',
+        'ten',
+        'ngay_sinh',
         'email',
         'dia_chi',
         'thong_tin',

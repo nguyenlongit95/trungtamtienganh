@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="tuoi">Tuổi</label> <span class="text-danger">*</span>
-                                    <input type="number" id="tuoi" name="tuoi" class="form-control" placeholder="18">
+                                    <input type="number" id="tuoi" name="tuoi" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
                                     <label for="dia-chi">Địa chỉ</label> <span class="text-danger">*</span>

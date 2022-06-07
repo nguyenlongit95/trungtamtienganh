@@ -40,8 +40,8 @@
                                     <input type="text" id="ten" name="ten" class="form-control" placeholder="Tên học viên">
                                 </div>
                                 <div class="form-group">
-                                    <label for="tuoi">Tuổi</label> <span class="text-danger">*</span>
-                                    <input type="number" id="tuoi" name="tuoi" class="form-control" placeholder="18">
+                                    <label for="tuoi">Ngày sinh</label> <span class="text-danger">*</span>
+                                    <input type="date" id="ngay_sinh" name="ngay_sinh" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
                                     <label for="dia-chi">Địa chỉ</label> <span class="text-danger">*</span>
@@ -143,7 +143,7 @@
                                     <div class="col-md-2 border-right">
                                         <div class="form-group">
                                             <label for="hoc_phi">Số tiền phải nộp</label>
-                                            <input type="text" disabled name="hoc_phi" value="" id="hoc_phi" class="form-control">
+                                            <input type="text" readonly name="hoc_phi" value="" id="hoc_phi" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-1 border-right text-center">
@@ -379,7 +379,6 @@
                     form.width(cache_width);
                 });
             }
-
             // create canvas object
             function getCanvas() {
                 form.width((a4[0] * 1.33333) - 0).css('max-width', 'none');
@@ -388,7 +387,6 @@
                     removeContainer: true
                 });
             }
-
         }());
     </script>
 
@@ -396,6 +394,5 @@
         .border-right {
             border-right: 1px double #7e7e7e;
         }
-
     </style>
 @endsection

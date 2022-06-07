@@ -64,7 +64,7 @@
                                     <tr>
                                         <td>{{ $hv->id  }}</td>
                                         <td>{{ $hv->ten }}</td>
-                                        <td class="text-center">{{ $hv->tuoi }}</td>
+                                        <td class="text-center">{{ $hv->ngay_sinh }}</td>
                                         <td class="text-center">{{ $hv->so_dien_thoai }}</td>
                                         <td class="text-center">
                                             @if($hv->trang_thai == 0)
