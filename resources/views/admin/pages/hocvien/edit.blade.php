@@ -263,9 +263,6 @@
             $('#id-hoc-phi').val(id);
             $('#modal-charge-nuition').modal('show');
             $('#hoc-phi').val($('#txt_hoc_phi_' + id).val());
-        }
-
-        function previewPrint() {
             let idHocPhi = $('#id-hoc-phi').val();
             /**
              * Call server get lop_hoc
@@ -277,12 +274,17 @@
                     idHocPhi: idHocPhi
                 },success: function (response) {
                     if (response !== null) {
+                        console.log(response);
                         $('#bill-lop-hoc').text(response.data.ten_lop);
                         $('#bill-start-date').text(response.data.thoi_gian_bat_dau);
                         $('#bill-hoc-phi').text($('#hoc-phi').val());
                     }
                 }
             });
+        }
+
+        function previewPrint() {
+            
         }
 
         function checkVoucher(voucher) {
