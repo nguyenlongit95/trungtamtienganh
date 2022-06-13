@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\ClassStudentExport;
 use App\LopHoc;
 use App\Models\GiangVien;
+use App\Repositories\HocPhi\HocPhiRepositoryInterface;
 use App\Repositories\HocVien\HocVienRepositoryInterface;
 use App\Repositories\LopHoc\LopHocRepositoryInterface;
 use App\Repositories\MonHoc\MonHocRepositoryInterface;
 use App\Repositories\QuaTrinhHoc\QuaTrinhHocRepositoryInterface;
 use App\Validations\Validation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Support\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -26,6 +29,7 @@ class LopHocController extends Controller
     private $monHocRepository;
     private $hocVienRepository;
     private $quaTrinhHocRepository;
+    private $hocPhiRepository;
 
     /**
      * LopHocController constructor.
@@ -33,18 +37,21 @@ class LopHocController extends Controller
      * @param MonHocRepositoryInterface $monHocRepository
      * @param HocVienRepositoryInterface $hocVienRepository
      * @param QuaTrinhHocRepositoryInterface $quaTrinhHocRepository
+     * @param HocPhiRepositoryInterface $hocPhiRepository
      */
     public function __construct(
         LopHocRepositoryInterface $lopHocRepository,
         MonHocRepositoryInterface $monHocRepository,
         HocVienRepositoryInterface $hocVienRepository,
-        QuaTrinhHocRepositoryInterface $quaTrinhHocRepository
+        QuaTrinhHocRepositoryInterface $quaTrinhHocRepository,
+        HocPhiRepositoryInterface $hocPhiRepository
     )
     {
         $this->lopHocRepository = $lopHocRepository;
         $this->monHocRepository = $monHocRepository;
         $this->hocVienRepository = $hocVienRepository;
         $this->quaTrinhHocRepository = $quaTrinhHocRepository;
+        $this->hocPhiRepository = $hocPhiRepository;
     }
 
     /**
@@ -124,11 +131,56 @@ class LopHocController extends Controller
         }
         $lichHoc = json_decode($lopHoc->lich_hoc);
         $lopHoc->lich_hoc = $lichHoc;
-
         // List danh sach hoc vien
         $quaTrinhHoc =  $this->lopHocRepository->listQuaTrinhHoc($id);
+        $studentInClass = DB::table('qua_trinh_hoc')->where('ma_lop_hoc', $id)
+            ->select('ma_hoc_vien')->pluck('ma_hoc_vien')
+            ->toArray();
+        // Select student not in class
+        $listStudentNotInClass = DB::table('hoc_vien')->whereNotIn('id', $studentInClass)->get();
+        //Response view data
+        return view('admin.pages.lophoc.edit', compact(
+            'monHoc', 'giangVien', 'lopHoc', 'quaTrinhHoc',
+                'listStudentNotInClass'
+        ));
+    }
 
-        return view('admin.pages.lophoc.edit', compact('monHoc', 'giangVien', 'lopHoc', 'quaTrinhHoc'));
+    public function addMultiStudent(Request $request, $id)
+    {
+        $maLopHoc = $id;
+        $param = $request->all();
+        if (isset($param['studentNotInClass'])) {
+            $lopHoc = $this->lopHocRepository->find($id);
+            $monHoc = $this->monHocRepository->find($lopHoc->ma_mon_hoc);
+            if (is_array($param['studentNotInClass'])) {
+                foreach ($param['studentNotInClass'] as $value) {
+                    try {
+                        $quaTrinhHoc['ma_mon_hoc'] = $monHoc->id;
+                        $quaTrinhHoc['ma_lop_hoc'] = $lopHoc->id;
+                        $quaTrinhHoc['ma_hoc_vien'] = $value;
+                        $quaTrinhHoc['thoi_gian_hoc'] = $lopHoc->thoi_gian_ket_thuc;
+                        $quaTrinhHoc['diem_so'] = null;
+                        $quaTrinhHoc['thong_tin'] = "";
+                        $quaTrinhHoc['tinh_trang_hoc'] = 1;
+                        $quaTrinhHoc['hoc_phi'] = $lopHoc->hoc_phi;
+                        // Add to table qua_trinh_hoc
+                        $this->quaTrinhHocRepository->create($quaTrinhHoc);
+                        $hocPhi['ma_hoc_vien'] = $value;
+                        $hocPhi['ma_lop_hoc'] = $lopHoc->id;
+                        $hocPhi['hoc_phi'] = $lopHoc->hoc_phi;
+                        $hocPhi['tinh_trang_nop_hoc_phi'] = 0;
+                        $hocPhi['ngay_nop_hoc_phi'] = null;
+                        // Add to table hoc_phi
+                        $this->hocPhiRepository->create($hocPhi);
+                    } catch (\Exception $exception) {
+                        Log::error($exception->getMessage());
+                        return redirect()->back()->with('status', 'Có lỗi hệ thống, kiểm tra lại kỹ thuật!');
+                    }
+
+                }
+            }
+        }
+        return redirect()->back()->with('status', 'Thêm danh sách học viên thành công.');
     }
 
     /**

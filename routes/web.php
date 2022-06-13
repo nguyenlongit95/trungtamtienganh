@@ -81,6 +81,7 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('{id}/them-hoc-vien/{lopHoc}', 'LopHocController@themHocVien');
         Route::get('/hoc-vien/{id}/kick-out', 'LopHocController@kickOut');
         Route::get('{id}/export-student', 'LopHocController@exportStudent');
+        Route::post('{id}/add-multi-student', 'LopHocController@addMultiStudent');
     });
 
     Route::group(['prefix' => 'qua-trinh-hoc'], function () {

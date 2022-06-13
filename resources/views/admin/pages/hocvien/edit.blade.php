@@ -259,12 +259,18 @@
 @section('custom-js')
     <script src="{{ asset('/js/pages/menus/menus.js') }}"></script>
     <script>
+        /**
+         * Function show modal corrects voucher's
+         */
         function _showModalVoucher(id) {
             $('#id-hoc-phi').val(id);
             $('#modal-charge-nuition').modal('show');
             $('#hoc-phi').val($('#txt_hoc_phi_' + id).val());
         }
 
+        /**
+         * Function preview print bill
+         */
         function previewPrint() {
             let idHocPhi = $('#id-hoc-phi').val();
             /**
@@ -285,6 +291,9 @@
             });
         }
 
+        /**
+         * Function check voucher
+         */
         function checkVoucher(voucher) {
             if(voucher === '') {
                 $('#txt-danger-alert').addClass('text-hide');
@@ -312,7 +321,6 @@
                             // Upgrade hoc phi
                             let oldHP = $('#hoc-phi').val();
                             let calPer = (oldHP * 10) / 100;alert(calPer);
-                            alert(calPer);
                             $('#hoc-phi').val(oldHP - calPer);
                             $('#bill-hoc-phi').text(oldHP - calPer);
                         }

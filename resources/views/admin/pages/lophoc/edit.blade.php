@@ -103,15 +103,31 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="lich_hoc">Lịch học</label> <span class="text-danger">*</span>
-                                    <br>
-                                    <label for="thu-hai"></label>Thứ hai: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(2, $lopHoc->lich_hoc)) checked @endif id="thu-hai" value="2" name="lich_hoc[]">
-                                    <label for="thu-ba"></label>Thứ ba: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(3, $lopHoc->lich_hoc)) checked @endif id="thu-ba" value="3" name="lich_hoc[]">
-                                    <label for="thu-tu"></label>Thứ tư: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(4, $lopHoc->lich_hoc)) checked @endif id="thu-tu" value="4" name="lich_hoc[]">
-                                    <label for="thu-nam"></label>Thứ năm: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(5, $lopHoc->lich_hoc)) checked @endif id="thu-nam" value="5" name="lich_hoc[]">
-                                    <br>
-                                    <label for="thu-sau"></label>Thứ sáu: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(6, $lopHoc->lich_hoc)) checked @endif id="thu-sau" value="6" name="lich_hoc[]">
-                                    <label for="thu-bay"></label>Thứ bảy: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(7, $lopHoc->lich_hoc)) checked @endif id="thu-bay" value="7" name="lich_hoc[]">
-                                    <label for="chu-nhat"></label>Chủ nhật: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(8, $lopHoc->lich_hoc)) checked @endif id="chu-nhat" value="8" name="lich_hoc[]">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="thu-hai"></label>Thứ hai: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(2, $lopHoc->lich_hoc)) checked @endif id="thu-hai" value="2" name="lich_hoc[]">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="thu-ba"></label>Thứ ba: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(3, $lopHoc->lich_hoc)) checked @endif id="thu-ba" value="3" name="lich_hoc[]">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="thu-tu"></label>Thứ tư: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(4, $lopHoc->lich_hoc)) checked @endif id="thu-tu" value="4" name="lich_hoc[]">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="thu-nam"></label>Thứ năm: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(5, $lopHoc->lich_hoc)) checked @endif id="thu-nam" value="5" name="lich_hoc[]">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="thu-sau"></label>Thứ sáu: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(6, $lopHoc->lich_hoc)) checked @endif id="thu-sau" value="6" name="lich_hoc[]">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="thu-bay"></label>Thứ bảy: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(7, $lopHoc->lich_hoc)) checked @endif id="thu-bay" value="7" name="lich_hoc[]">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="chu-nhat"></label>Chủ nhật: <input @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif type="checkbox" @if(in_array(8, $lopHoc->lich_hoc)) checked @endif id="chu-nhat" value="8" name="lich_hoc[]">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="gio-bat-dau">Giờ lên lớp</label> <span class="text-danger">*</span>
@@ -147,7 +163,7 @@
                             <thead>
                             <tr>
                                 <th>Tên học viên</th>
-                                <th class="text-center">Tuổi</th>
+                                <th class="text-center">Ngày sinh</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Lưu ý với học viên</th>
                                 <th class="text-center">Tình trạng học bài</th>
@@ -178,7 +194,7 @@
                                     @endforeach
                                 </tbody>
                             @else
-                                <p class="text-danger text-center">Chưa có học viên trong lớp này</p>
+                                <p class="text-danger text-center">Chưa có học viên trong lớp này.</p>
                             @endif
                         </table>
                     </div>
@@ -190,6 +206,7 @@
                             @endif
                         </div>
                         <p>- Click vào text <span class="text-danger">Xuất danh sách học viên</span> để xuất file excel danh sách học viên</p>
+                        <p>- Tại đây hiển thị danh sách các học viên có trong lớp học. Những học viên có trong danh sách này sẽ không xuất hiện tại hộp thoại thêm nhiều học viên. <span class="text-danger">*</span></p>
                     </div>
                 </div>
             </div>
@@ -232,6 +249,10 @@
                     <div class="card-footer">
                         <div class="paginate">
                             <p>- Quản lý hãy tìm kiếm học viên trước khi thêm học viên vào lớp này <span class="text-danger"> * </span></p>
+                            <p>- Quản lý click vào nút <span class="text-danger">Thêm nhiều học viên</span> để có thể chọn nhiều học viên cho lớp học này.</p>
+                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+                                Thêm nhiều học viên
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -239,11 +260,67 @@
         </section>
         <!-- /.content -->
     </div>
+    <!-- Modal content -->
+    <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form action="{{ url('/admin/lop-hoc/' . $lopHoc->id . '/add-multi-student') }}" method="POST" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm nhiều học viên</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>
+                                    <td>Tên</td>
+                                    <td>Ngày sinh</td>
+                                    <td>Email</td>
+                                    <td>Lựa chọn</td>
+                                </th>
+                            </thead>
+                            <tbody>
+                            @if(!empty($listStudentNotInClass))
+                                @foreach($listStudentNotInClass as $value)
+                                <tr>
+                                    <td>{{ $value->id }}</td>
+                                    <td>{{ $value->ten }}</td>
+                                    <td>
+                                        @if(!empty($value->ngay_sinh))
+                                            <?php $carbon = \Carbon\Carbon::create($value->ngay_sinh); ?>
+                                        {{ $carbon->format('d-m-Y') }}
+                                        @endif
+                                    </td>
+                                    <td>@if(!empty($value->email)) {{ $value->email }} @else - @endif</td>
+                                    <td>
+                                        <input type="checkbox" name="studentNotInClass[]" value="{{ $value->id }}">
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @endif
+                            </tbody>
+                        </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('custom-js')
     <script src="{{ asset('/js/pages/menus/menus.js') }}"></script>
     <script>
+        /**
+         * Function search hoc_viẻn
+         */
         function searchHocVien() {
             let _ten = $('#ten').val();
             $.ajax({

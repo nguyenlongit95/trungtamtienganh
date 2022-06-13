@@ -29,14 +29,18 @@ class HocPhiEloquentRepository extends EloquentRepository implements HocPhiRepos
      */
     public function listHocPhi()
     {
-        $hocPhi = HocPhi::join('hoc_vien', 'hoc_phi.ma_hoc_vien', 'hoc_vien.id')
-            ->join('lop_hoc', 'hoc_phi.ma_lop_hoc', 'lop_hoc.id')
-            ->select(
-                'hoc_phi.id', 'hoc_phi.hoc_phi', 'hoc_phi.tinh_trang_nop_hoc_phi', 'hoc_phi.ngay_nop_hoc_phi',
-                'hoc_vien.ten',
-                'lop_hoc.ten_lop as lop_hoc'
-            )->orderBy('id', 'DESC')->paginate(config('const.paginate'));
-
+        $hocPhi = HocPhi::orderBy('id', 'DESC')->paginate(15);
+        if (!empty($hocPhi)) {
+            foreach ($hocPhi as $value) {
+                $hocVien = DB::table('hoc_vien')->find($value->ma_hoc_vien);
+                if (empty($hocVien)) {
+                    continue;
+                }
+                $value->ten = $hocVien->ten;
+                $lopHoc = DB::table('lop_hoc')->find($value->ma_lop_hoc);
+                $value->lop_hoc = $lopHoc->ten_lop;
+            }
+        }
         return $this->_mergeAttr($hocPhi);
     }
 
@@ -76,8 +80,13 @@ class HocPhiEloquentRepository extends EloquentRepository implements HocPhiRepos
     {
         if (!empty($hocPhi)) {
             foreach ($hocPhi as $value) {
-                $time = new Carbon($value->ngay_nop_hoc_phi);
-                $value->ngay_nop_hoc_phi = $time->format('Y-m-d');
+                if (!is_null($value->ngay_nop_hoc_phi)) {
+                    $time = new Carbon($value->ngay_nop_hoc_phi);
+                    $value->ngay_nop_hoc_phi = $time->format('Y-m-d');
+                } else {
+                    $value->ngay_nop_hoc_phi = "-";
+                }
+
             }
         }
 
