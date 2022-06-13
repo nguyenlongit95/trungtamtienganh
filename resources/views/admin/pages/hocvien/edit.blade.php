@@ -294,6 +294,10 @@
         /**
          * Function check voucher
          */
+        function previewPrint() {
+
+        }
+
         function checkVoucher(voucher) {
             if(voucher === '') {
                 $('#txt-danger-alert').addClass('text-hide');

@@ -227,7 +227,7 @@ class HocVienController extends Controller
         $param = $request->all();
         $lopHoc = $this->lopHocRepository->find($param['idLopHoc']);
         if (!empty($lopHoc)) {
-            return $lopHoc->hoc_phi;
+            return app()->make(ResponseHelper::class)->success($lopHoc);
         }
         return null;
     }
@@ -258,6 +258,8 @@ class HocVienController extends Controller
         $param = $request->all();
         $lopHoc = $this->lopHocRepository->find($param['lop_hoc']);
         if (!empty($lopHoc)) {
+            $carbon = Carbon::create($lopHoc->thoi_gian_bat_dau);
+            $lopHoc->start_date = $carbon->format('d-m-Y');
             return app()->make(ResponseHelper::class)->success($lopHoc);
         }
         return null;
