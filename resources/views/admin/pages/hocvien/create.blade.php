@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="col-md-2 border-right">
                                         <div class="form-group">
-                                            <label for="voucher">Voucher - mã khuyến mại</label>
+                                            <label for="voucher">Voucher - khuyến mại</label>
                                             <input type="text" name="voucher" value="" id="voucher" class="form-control" onchange="checkVoucher($(this).val())">
                                             <p class="text-hide text-danger" id="txt-danger-alert"></p>
                                         </div>

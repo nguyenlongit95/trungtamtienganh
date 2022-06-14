@@ -42,7 +42,7 @@ class ClassStudentExport implements FromCollection, WithHeadings
             ->leftJoin('diem_so', 'qua_trinh_hoc.id', 'diem_so.ma_qua_trinh_hoc')
             ->where('qua_trinh_hoc.ma_lop_hoc', $lopHoc->id)
             ->select(
-                'hoc_vien.id','hoc_vien.ten', 'hoc_vien.tuoi',
+                'hoc_vien.id','hoc_vien.ten', 'hoc_vien.ngay_sinh',
                 'lop_hoc.ten_lop', 'lop_hoc.ma_lop',
                 'qua_trinh_hoc.thoi_gian_hoc', 'qua_trinh_hoc.thong_tin', 'qua_trinh_hoc.tinh_trang_hoc',
                 'hoc_vien.email', 'hoc_vien.so_dien_thoai',
@@ -76,7 +76,7 @@ class ClassStudentExport implements FromCollection, WithHeadings
         return [
             'Mã học viên',
             'Tên học viên',
-            'Tuổi',
+            'Ngày sinh',
             'Lớp học',
             'Mã lớp',
             'Thời gian học',
