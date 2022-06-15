@@ -167,7 +167,7 @@
             </div>
             @endif
             <div class="row">
-                <div class="col-12">
+                <div class="col-6">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Danh sách các lớp đang mở trong tháng này</h3>
@@ -199,6 +199,55 @@
                                     @endforeach
                                 @else
                                     <p class="text-danger">Hiện chưa có lớp học được mở</p>
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <form action="{{ url('/admin/') }}" method="get" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3 class="card-title float-left">Lọc học viên mới trong ngày</h3>
+                                    </div>
+                                    <div class="col-3">
+                                        <input type="date" class="form-control" name="date" value="">
+                                    </div>
+                                    <div class="col-3">
+                                        <input type="submit" class="btn btn-secondary" name="filter" value="Lọc">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0" style="height: 300px;">
+                            <table class="table table-head-fixed text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Email</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if(!empty($students))
+                                    @foreach($students as $value)
+                                        <tr>
+                                            <td>{{ $value->id }}</td>
+                                            <td><a href="{{ url('/admin/hoc-vien/' . $value->id . '/edit') }}">{{ $value->ten }}</a></td>
+                                            <td>{{ $value->ngay_sinh }}</td>
+                                            <td><span class="tag tag-success">{{ $value->email }}</span></td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <p class="text-danger">Không có học viên mới trong ngày</p>
                                 @endif
                                 </tbody>
                             </table>

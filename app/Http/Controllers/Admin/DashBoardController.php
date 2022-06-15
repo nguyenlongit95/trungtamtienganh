@@ -52,11 +52,25 @@ class DashBoardController extends Controller
         $lopHoc = LopHoc::whereMonth('thoi_gian_bat_dau', '>=', $carbon->format('m'))
             ->where('thoi_gian_ket_thuc', '>', Carbon::now()->format('m'))->get();
 
+        $param = $request->all();
+        $students = null;
+        if (isset($param['date'])) {
+            $students = DB::table('hoc_vien')->whereDate('created_at', $param['date'])->get();
+        } else {
+            $students = DB::table('hoc_vien')->whereDate('created_at', Carbon::now())->get();
+        }
+        if (!is_null($students)) {
+            foreach ($students as $student) {
+                $carbon = Carbon::create($student->ngay_sinh);
+                $student->ngay_sinh = $carbon->format('d-m-Y');
+            }
+        }
         return view('admin.pages.dashboard', compact(
             'totalStudent', 'totalTeacher', 'totalClass', 'totalVoucher',
             'thuHocPhi', 'luongGiangVien', 'calculateStudent',
             'lopHoc',
-            'thisYear'
+            'thisYear',
+            'students'
         ));
     }
 
