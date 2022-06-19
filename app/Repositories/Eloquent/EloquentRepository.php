@@ -38,7 +38,7 @@ abstract class EloquentRepository implements RepositoryInterface
      */
     public function getAll($paginate, $orderBy)
     {
-        return $this->_model->orderBy('id', $orderBy)->paginate($paginate);
+        return $this->_model->whereNull('deleted_at')->orderBy('id', $orderBy)->paginate($paginate);
     }
 
     /**

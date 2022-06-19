@@ -72,6 +72,8 @@
                                             @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
                                             <td class="text-center">
                                                 <a href="{{ url('/admin/mon-hoc/' . $mh->id . '/edit') }}" title="Chỉnh sửa {{ $mh->name }}"><i class="fas fa-pen"></i></a>
+                                                |
+                                                <a href="{{ url('/admin/mon-hoc/' . $mh->id . '/delete') }}" title="Chỉnh sửa {{ $mh->name }}"><i class="fas fa-trash"></i></a>
                                             </td>
                                             @endif
                                         </tr>

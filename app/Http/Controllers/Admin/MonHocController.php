@@ -7,6 +7,8 @@ use App\Repositories\MonHoc\MonHocRepositoryInterface;
 use App\Validations\Validation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class MonHocController extends Controller
 {
@@ -122,5 +124,19 @@ class MonHocController extends Controller
         $monHoc = $this->monHocRepository->search($param);
 
         return view('admin.pages.monhoc.index', compact('monHoc'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\MonHoc  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request, $id)
+    {
+        $delete = DB::table('mon_hoc')->where('id', $id)->update([
+            'deleted_at' => Carbon::now()
+        ]);
+        return redirect('/admin/mon-hoc/');
     }
 }

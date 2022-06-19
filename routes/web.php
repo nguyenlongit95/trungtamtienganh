@@ -68,6 +68,7 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('{id}/edit', 'MonHocController@edit');
         Route::post('{id}/update', 'MonHocController@update');
         Route::post('/search', 'MonHocController@search');
+        Route::get('{id}/delete', 'MonHocController@delete');
     });
 
     Route::group(['prefix' => 'lop-hoc'], function () {
