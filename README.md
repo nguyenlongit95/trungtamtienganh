@@ -65,4 +65,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - Ở màn hình thêm học viên, mục học phí sẽ cho nhập số buổi học tương ứng với lớp đã chọn. (OK)
 - Tại phần quản lý học phí, sẽ cho đóng học phí theo lớp.
 - Tính tỷ lệ chiết khấu theo buổi.
-- Đối với học viên cũ khi thêm vào lớp học sẽ cho nhập số buổi học và tính học phí theo số buổi học đó
+- Đối với học viên cũ khi thêm vào lớp học sẽ cho nhập số buổi học và tính học phí theo số buổi học đó (OK)
