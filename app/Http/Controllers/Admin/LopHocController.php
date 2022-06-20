@@ -147,7 +147,6 @@ class LopHocController extends Controller
 
     public function addMultiStudent(Request $request, $id)
     {
-        $maLopHoc = $id;
         $param = $request->all();
         if (isset($param['studentNotInClass'])) {
             $lopHoc = $this->lopHocRepository->find($id);
@@ -155,6 +154,9 @@ class LopHocController extends Controller
             if (is_array($param['studentNotInClass'])) {
                 foreach ($param['studentNotInClass'] as $value) {
                     try {
+                        // Calculation hoc phi
+                        $calHocPhi = $lopHoc->hoc_phi * $param['so_buoi_hoc_' . $value];
+                        // init param qua trinh hoc
                         $quaTrinhHoc['ma_mon_hoc'] = $monHoc->id;
                         $quaTrinhHoc['ma_lop_hoc'] = $lopHoc->id;
                         $quaTrinhHoc['ma_hoc_vien'] = $value;
@@ -162,12 +164,13 @@ class LopHocController extends Controller
                         $quaTrinhHoc['diem_so'] = null;
                         $quaTrinhHoc['thong_tin'] = "";
                         $quaTrinhHoc['tinh_trang_hoc'] = 1;
-                        $quaTrinhHoc['hoc_phi'] = $lopHoc->hoc_phi;
+                        $quaTrinhHoc['hoc_phi'] = $calHocPhi;
                         // Add to table qua_trinh_hoc
                         $this->quaTrinhHocRepository->create($quaTrinhHoc);
+                        // init param hoc phi
                         $hocPhi['ma_hoc_vien'] = $value;
                         $hocPhi['ma_lop_hoc'] = $lopHoc->id;
-                        $hocPhi['hoc_phi'] = $lopHoc->hoc_phi;
+                        $hocPhi['hoc_phi'] = $calHocPhi;
                         $hocPhi['tinh_trang_nop_hoc_phi'] = 0;
                         $hocPhi['ngay_nop_hoc_phi'] = null;
                         // Add to table hoc_phi

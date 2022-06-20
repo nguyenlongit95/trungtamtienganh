@@ -76,6 +76,8 @@
                             <div class="card-footer">
                                 <p>- Những trường thông tin có dấu <span class="text-danger">*</span> là bắt buộc phải nhập.</p>
                                 <p>- Sau khi nhập xong thông tin trên các trường dữ liệu phía trên quản lý hãy click vào nút <span class="text-danger">(Thêm mới)</span> để thêm mới học viên.</p>
+                                <p>- Số buổi học sẽ được nhập dựa trên ngày bắt đầu, ngày kết thúc và số ngày trong tuần.</p>
+                                <p>- Quản trị viên cũng có thể nhập số lượng buổi học bằng tay.</p>
                             </div>
                         </div>
                     </div>
@@ -112,6 +114,10 @@
                                     <label for="chu-nhat"></label>Chủ nhật: <input type="checkbox" id="chu-nhat" value="8" name="lich_hoc[]">
                                 </div>
                                 <div class="form-group">
+                                    <label for="so-buoi-hoc">Số buổi học:</label> <span class="text-danger">*</span>
+                                    <input type="text" id="so-buoi-hoc" name="so_buoi_hoc" class="form-control" placeholder="1">
+                                </div>
+                                <div class="form-group">
                                     <label for="gio-bat-dau">Giờ lên lớp</label> <span class="text-danger">*</span>
                                     <input type="time" id="gio-bat-dau" name="gio_vao_lop" class="form-control" placeholder="">
                                 </div>
@@ -120,7 +126,7 @@
                                     <input type="time" id="gio-ket-thuc" name="gio_tan_lop" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
-                                    <label for="hoc-phi">Học phí (vnd)</label> <span class="text-danger">*</span>
+                                    <label for="hoc-phi">Học phí / 1 buổi (vnd)</label> <span class="text-danger">*</span>
                                     <input type="number" id="hoc-phi" name="hoc_phi" class="form-control" placeholder="800000">
                                 </div>
                             </div>

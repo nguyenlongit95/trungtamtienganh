@@ -22,5 +22,6 @@ class LopHoc extends Model
         'gio_tan_lop',
         'lich_hoc',
         'hoc_phi',
+        'so_buoi_hoc'
     ];
 }

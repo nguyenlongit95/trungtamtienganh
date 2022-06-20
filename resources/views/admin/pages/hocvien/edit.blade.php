@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="tuoi">Ngày sinh</label> <span class="text-danger">*</span>
-                                    <input type="number" id="tuoi" name="ngay_sinh" class="form-control" value="{{  $hocVien->ngay_sinh }}">
+                                    <input type="text" id="tuoi" name="ngay_sinh" class="form-control" value="{{  $hocVien->ngay_sinh }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="dia-chi">Địa chỉ</label> <span class="text-danger">*</span>
@@ -58,6 +58,7 @@
                                 <p>- Sau khi nhập xong thông tin trên các trường dữ liệu phía trên quản lý hãy click vào nút <span class="text-danger">(Chỉnh sửa)</span> để thêm mới học viên.</p>
                                 <p>- Tình trạng theo học tại trung tâm, quản lý lựa chọn là đang theo học và đã nghỉ học.</p>
                                 <p>- Sau khi cập nhật thì hệ thống sẽ tự động lưu và đưa về trang danh sách học viên.</p>
+                                <p>- Số buổi học sẽ được tính dựa trên số học phí / học phí 1 buổi của lớp đang theo học.</p>
                             </div>
                         </div>
                     </div>
@@ -120,6 +121,7 @@
                                         <th>Tên</th>
                                         <th class="text-center">Lớp học</th>
                                         <th class="text-center">Học Phí</th>
+                                        <th class="text-center">Số buổi học</th>
                                         <th class="text-center">Tình trạng nộp học phí</th>
                                         <th class="text-center">Ngày nộp học phí</th>
                                         <th class="text-center">Nộp học phí</th>
@@ -133,6 +135,7 @@
                                                     <td>{{ $hocVien->ten }}</td>
                                                     <td class="text-center">{{ $value->lop_hoc }}</td>
                                                     <td class="text-center">{{ number_format($value->hoc_phi, 0) }}</td>
+                                                    <td class="text-center">{{ $value->so_buoi_hoc }}</td>
                                                     <td class="text-center">
                                                         @if($value->tinh_trang_nop_hoc_phi === 0)
                                                             <p class="text-danger">Chưa nộp học phí</p>
@@ -151,6 +154,7 @@
                                                 </tr>
                                                 <input type="hidden" id="txt_ten_lop_{{ $value->id }}" value="{{ $value->lop_hoc }}">
                                                 <input type="hidden" id="txt_hoc_phi_{{ $value->id }}" value="{{ $value->hoc_phi }}">
+                                                <input type="hidden" id="txt_so_buoi_hoc_{{ $value->id }}" value="{{ $value->so_buoi_hoc }}">
                                             @endforeach
                                         @else
                                         <p class="text-danger">Chưa có học phí cần phải nộp</p>
@@ -182,16 +186,20 @@
                         <!-- Modal body -->
                         <div class="modal-body">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <textarea name="voucher" class="form-control" id="" cols="30" rows="3" onchange="checkVoucher($(this).val())"></textarea>
-                            <p class="text-hide text-danger" id="txt-danger-alert"></p>
+{{--                            <textarea name="voucher" class="form-control" id="" cols="30" rows="3" onchange="checkVoucher($(this).val())"></textarea>--}}
+{{--                            <p class="text-hide text-danger" id="txt-danger-alert"></p>--}}
+                            <br>
+                            <label for="hoc-phi">Số buổi học<span class="text-danger">*</span></label>
+                            <input type="number" value="" class="form-control" id="so-buoi-hoc" name="so-buoi-hoc" placeholder="">
                             <br>
                             <label for="hoc-phi">Số tiền phải nộp <span class="text-danger">*</span></label>
-                            <input type="text" readonly value="" class="form-control" id="hoc-phi">
+                            <input type="text" readonly value="" name="hoc-phi" class="form-control" id="hoc-phi">
+                            <input type="hidden" id="tmp-id" value="">
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <input type="button" id="preview-print" value="Xem in" class="btn btn-secondary" onclick="previewPrint()">
+                            <input type="button" id="preview-print" value="Xem in" class="btn btn-secondary">
                             <button type="submit" class="btn btn-primary">Nộp học phí</button>
                         </div>
                     </div>
@@ -266,12 +274,9 @@
             $('#id-hoc-phi').val(id);
             $('#modal-charge-nuition').modal('show');
             $('#hoc-phi').val($('#txt_hoc_phi_' + id).val());
-        }
-
-        /**
-         * Function preview print bill
-         */
-        function previewPrint() {
+            $('#so-buoi-hoc').val($('#txt_so_buoi_hoc_' + id).val());
+            $('#tmp-id').val(id);
+            // Filter data PDF
             let idHocPhi = $('#id-hoc-phi').val();
             /**
              * Call server get lop_hoc
@@ -289,13 +294,6 @@
                     }
                 }
             });
-        }
-
-        /**
-         * Function check voucher
-         */
-        function previewPrint() {
-
         }
 
         function checkVoucher(voucher) {
@@ -369,5 +367,14 @@
                 });
             }
         }());
+
+        $(document).ready(function () {
+            $('#so-buoi-hoc').on('keyup', function (evt) {
+                let tmpID = $('#tmp-id').val();
+                let hocPhiBasic = $('#txt_hoc_phi_' + tmpID).val();
+                $('#hoc-phi').val(hocPhiBasic * $(this).val());
+                $('#bill-hoc-phi').text(hocPhiBasic * $(this).val());
+            })
+        });
     </script>
 @endsection

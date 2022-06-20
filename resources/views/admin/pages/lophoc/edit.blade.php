@@ -78,6 +78,8 @@
                             <div class="card-footer">
                                 <p>- Những trường thông tin có dấu <span class="text-danger">*</span> là bắt buộc phải nhập.</p>
                                 <p>- Sau khi nhập xong thông tin trên các trường dữ liệu phía trên quản lý hãy click vào nút <span class="text-danger">(Chỉnh sửa)</span> để thêm mới học viên.</p>
+                                <p>- Số buổi học sẽ được nhập dựa trên ngày bắt đầu, ngày kết thúc và số ngày trong tuần.</p>
+                                <p>- Quản trị viên cũng có thể nhập số lượng buổi học bằng tay.</p>
                             </div>
                         </div>
                     </div>
@@ -130,6 +132,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="so-buoi-hoc">Số buổi học:</label> <span class="text-danger">*</span>
+                                    <input type="text" id="so-buoi-hoc" name="so_buoi_hoc" class="form-control" value="{{ $lopHoc->so_buoi_hoc }}">
+                                </div>
+                                <div class="form-group">
                                     <label for="gio-bat-dau">Giờ lên lớp</label> <span class="text-danger">*</span>
                                     <input type="text" @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif id="gio-bat-dau" name="gio_vao_lop" class="form-control" value="{{ $lopHoc->gio_vao_lop }}">
                                 </div>
@@ -138,7 +144,7 @@
                                     <input type="text" @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif id="gio-ket-thuc" name="gio_tan_lop" class="form-control" value="{{ $lopHoc->gio_tan_lop }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="hoc-phi">Học phí (vnd)</label> <span class="text-danger">*</span>
+                                    <label for="hoc-phi">Học phí/ 1 buổi (vnd)</label> <span class="text-danger">*</span>
                                     <input type="number" @if(\Illuminate\Support\Facades\Auth::user()->role != 0) readonly @endif id="hoc-phi" name="hoc_phi" class="form-control" value="{{ $lopHoc->hoc_phi }}">
                                 </div>
                             </div>
@@ -279,6 +285,7 @@
                                 <th>
                                     <td>Tên</td>
                                     <td>Ngày sinh</td>
+                                    <td>Số buổi học</td>
                                     <td>Email</td>
                                     <td>Lựa chọn</td>
                                 </th>
@@ -294,6 +301,9 @@
                                             <?php $carbon = \Carbon\Carbon::create($value->ngay_sinh); ?>
                                         {{ $carbon->format('d-m-Y') }}
                                         @endif
+                                    </td>
+                                    <td>
+                                        <input type="number" name="so_buoi_hoc_{{ $value->id }}" value="{{ $lopHoc->so_buoi_hoc }}" class="form-control">
                                     </td>
                                     <td>@if(!empty($value->email)) {{ $value->email }} @else - @endif</td>
                                     <td>

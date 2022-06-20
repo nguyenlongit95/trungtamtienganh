@@ -129,15 +129,14 @@
                                     </div>
                                     <div class="col-md-2 border-right">
                                         <div class="form-group">
-                                            <label for="input-hoc-phi">Học phí</label>
+                                            <label for="input-hoc-phi">Học phí theo buổi</label>
                                             <input type="text" disabled name="input-hoc-phi" value="" id="input-hoc-phi" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-2 border-right">
                                         <div class="form-group">
-                                            <label for="voucher">Voucher - khuyến mại</label>
-                                            <input type="text" name="voucher" value="" id="voucher" class="form-control" onchange="checkVoucher($(this).val())">
-                                            <p class="text-hide text-danger" id="txt-danger-alert"></p>
+                                            <label for="buoi_hoc">Số buổi học</label>
+                                            <input type="number" name="buoi_hoc" placeholder="1" id="buoi_hoc" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-2 border-right">
@@ -339,17 +338,32 @@
                     data: {
                         idLopHoc:  $(this).val()
                     }, success: function (response) {
+                        console.log(response);
                         if (response !== null) {
                             $('#input-hoc-phi').val(response.data.hoc_phi);
-                            $('#hoc_phi').val(response.data.hoc_phi);
                             $('#preview-print').removeAttr('disabled');
                             $('#bill-start-date').text(response.data.thoi_gian_bat_dau);
+                            $('#buoi_hoc').val(response.data.so_buoi_hoc);
+                            $('#hoc_phi').val(response.data.hoc_phi * response.data.so_buoi_hoc);
                         } else {
                             alert('Không truy xuất được học phí của lớp học, kiểm tra lại hệ thống!');
                             $('#preview-print').attr('disabled');
                         }
                     }
                 })
+            }
+        });
+
+        /**
+         * Calculate tuition based on number of lessons
+         */
+        $('#buoi_hoc').on('keyup', function (evt) {
+            let inputHocPhi = $('#input-hoc-phi').val();
+            if (inputHocPhi === "" || inputHocPhi === null) {
+                alert("Hãy chọn môn học và lớp học trước!");
+                $('#so-buoi-hoc').val(0);
+            } else {
+                $('#hoc_phi').val($(this).val() * inputHocPhi);
             }
         });
     </script>

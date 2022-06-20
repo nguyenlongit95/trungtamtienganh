@@ -126,6 +126,12 @@ class HocVienController extends Controller
             return redirect('/admin/hoc-vien')->with('status', config('langVN.find_err'));
         }
         $hocPhi = $this->hocvienRepository->listHocPhi($id);
+        if (!empty($hocPhi)) {
+            foreach ($hocPhi as $value) {
+                $lopHoc = DB::table('lop_hoc')->where('id', $value->ma_lop_hoc)->first();
+                $value->so_buoi_hoc = $value->hoc_phi / $lopHoc->hoc_phi;
+            }
+        }
 
         return view('admin.pages.hocvien.edit', compact('hocVien', 'hocPhi'));
     }
@@ -221,6 +227,7 @@ class HocVienController extends Controller
      *
      * @param Request $request
      * @return |null
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getPriceOfClass(Request $request)
     {
