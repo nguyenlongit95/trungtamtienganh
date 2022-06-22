@@ -99,6 +99,9 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('/', 'HocPhiController@index');
         Route::post('/search', 'HocPhiController@search');
         Route::post('/export', 'HocPhiController@export');
+        Route::post('/them-chiet-khau/{id}', 'HocPhiController@themChietKhau');
+        Route::post('/chinh-sua-chiet-khau/{id}', 'HocPhiController@chinhSuaChietKhau');
+        Route::get('/xoa-chiet-khau/{id}', 'HocPhiController@xoaChietKhau');
     });
 
     Route::group(['prefix' => 'giang-vien'], function () {
