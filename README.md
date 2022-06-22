@@ -67,3 +67,4 @@ Spec change
 - Tại phần quản lý học phí, sẽ cho đóng học phí theo lớp. (OK)
 - Tính tỷ lệ chiết khấu theo buổi: Thêm 1 bảng chiết khấu trong db
 - Đối với học viên cũ khi thêm vào lớp học sẽ cho nhập số buổi học và tính học phí theo số buổi học đó
+
