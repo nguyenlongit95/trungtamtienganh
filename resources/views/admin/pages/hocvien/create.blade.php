@@ -384,7 +384,6 @@
                                         $('#bill-hoc-phi').text(hocPhiDefault - chietKhau);
                                         break;
                                     } else {
-                                        alert(0);
                                         $('#hoc_phi').val(soBuoiHoc * inputHocPhi);
                                         $('#bill-hoc-phi').text(soBuoiHoc * inputHocPhi);
                                     }
