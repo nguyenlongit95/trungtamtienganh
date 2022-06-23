@@ -74,8 +74,8 @@
                         <div class="col-2">Mã lớp</div>
                         <div class="col-2">Số học viên</div>
                         <div class="col-2">Số buổi học</div>
-                        <div class="col-3">Học phí theo buổi</div>
-                        <div class="col-1">Chiết khấu</div>
+                        <div class="col-2">Học phí theo buổi</div>
+                        <div class="col-2">Chiết khấu</div>
                     </div>
                     <br>
                     @if(!empty($lopHoc))
