@@ -105,12 +105,12 @@
                                                 <input type="number" class="form-control" name="chiet_khau" id="chiet_khau" value="{{ $ck->chiet_khau }}">
                                             </div>
                                             <div class="col-2 float-left">
-                                                <label for="create-chiet-khau">Click vào nút để thêm chiết khấu <span class="text-danger">*</span></label><br>
-                                                <input type="submit" class="btn btn-warning" id="create-chiet-khau" value="Chỉnh sửa giá trị chiết khấu">
+                                                <label for="create-chiet-khau">Click vào nút để thêm <span class="text-danger">*</span></label><br>
+                                                <input type="submit" class="btn btn-warning" id="create-chiet-khau" value="Chỉnh sửa">
                                             </div>
                                             <div class="col-2 float-left">
-                                                <label for="create-chiet-khau">Click vào nút để xoá chiết khấu <span class="text-danger">*</span></label><br>
-                                                <a href="{{ url('/admin/hoc-phi/xoa-chiet-khau/' . $ck->id) }}" class="btn btn-danger">Xoá chiết khấu</a>
+                                                <label for="create-chiet-khau">Click vào nút để xoá <span class="text-danger">*</span></label><br>
+                                                <a href="{{ url('/admin/hoc-phi/xoa-chiet-khau/' . $ck->id) }}" class="btn btn-danger">Xoá</a>
                                             </div>
                                         </form>
                                         @endif
