@@ -160,7 +160,7 @@
                                     <p>- Sau khi chọn thông tin lớp học, click vào button "<span class="text-danger">Xem in</span>" để xuất file PDF sau đó tiến hành in dữ liệu.</p>
                                 </div>
                                 <div class="col-md-1">
-                                    <input type="submit" name="create" class="btn btn-primary float-right" value="Thêm học viên">
+                                    <input type="submit" name="create" class="btn btn-primary float-right" value="Xác nhận">
                                 </div>
                                 </div>
                             </div>
@@ -374,18 +374,24 @@
                         id: $('#select_class').val()
                     },
                     success: function (response) {
-                        if (response.code === 200) {
+                        if (response.code === 200) { console.log(response.data.length);
                             // Fill hoc_phi
-                            for (let i = 0; i < response.data.length; i++) {
-                                if (soBuoiHoc == response.data[i].so_buoi_hoc) {
-                                    let chietKhau = (hocPhiDefault * response.data[i].chiet_khau) / 100;
-                                    $('#hoc_phi').val(hocPhiDefault - chietKhau);
-                                    $('#bill-hoc-phi').text(hocPhiDefault - chietKhau);
-                                    break;
-                                } else {
-                                    $('#hoc_phi').val(soBuoiHoc * inputHocPhi);
-                                    $('#bill-hoc-phi').text(soBuoiHoc * inputHocPhi);
+                            if (response.data.length > 0) {
+                                for (let i = 0; i < response.data.length; i++) {
+                                    if (soBuoiHoc == response.data[i].so_buoi_hoc) {
+                                        let chietKhau = (hocPhiDefault * response.data[i].chiet_khau) / 100;
+                                        $('#hoc_phi').val(hocPhiDefault - chietKhau);
+                                        $('#bill-hoc-phi').text(hocPhiDefault - chietKhau);
+                                        break;
+                                    } else {
+                                        alert(0);
+                                        $('#hoc_phi').val(soBuoiHoc * inputHocPhi);
+                                        $('#bill-hoc-phi').text(soBuoiHoc * inputHocPhi);
+                                    }
                                 }
+                            } else {
+                                $('#hoc_phi').val(soBuoiHoc * inputHocPhi);
+                                $('#bill-hoc-phi').text(soBuoiHoc * inputHocPhi);
                             }
                         }
                     }
