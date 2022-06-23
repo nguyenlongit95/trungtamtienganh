@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\HocPhiExport;
 use App\HocPhi;
 use App\Repositories\HocPhi\HocPhiRepositoryInterface;
+use App\Support\ResponseHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -106,9 +107,11 @@ class HocPhiController extends Controller
     public function search(Request $request)
     {
         $param = $request->all();
-        $hocPhi = $this->hocPhiRepository->search($param);
-
-        return view('admin.pages.hocphi.index', compact('hocPhi'));
+        $lopHoc = DB::table('lop_hoc')->where('ten_lop', 'like', '%' . $param['lop_hoc'] . '%')
+            ->orderBy('id', 'DESC')
+            ->paginate(15);
+        $chietKhau = DB::table('chiet_khau')->get();
+        return view('admin.pages.hocphi.index', compact('lopHoc', 'chietKhau'));
     }
 
     /**
@@ -120,7 +123,20 @@ class HocPhiController extends Controller
     public function export(Request $request)
     {
         $param = $request->all();
-
         return Excel::download(new HocPhiExport($param['start_time'], $param['end_time']), 'Học phí của học viên.xlsx');
+    }
+
+    /**
+     * Controller function local api get chiet_khau of class
+     *
+     * @param Request $request
+     * @return mixed
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function detailChietKhau(Request $request)
+    {
+        $param = $request->all();
+        $chietKhau = DB::table('chiet_khau')->where('ma_lop_hoc', $param['id'])->get();
+        return app()->make(ResponseHelper::class)->success($chietKhau);
     }
 }

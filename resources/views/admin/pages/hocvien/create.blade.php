@@ -356,14 +356,40 @@
 
         /**
          * Calculate tuition based on number of lessons
+         * Calculate additional discount case
          */
         $('#buoi_hoc').on('keyup', function (evt) {
             let inputHocPhi = $('#input-hoc-phi').val();
+            let soBuoiHoc = $(this).val();
             if (inputHocPhi === "" || inputHocPhi === null) {
                 alert("Hãy chọn môn học và lớp học trước!");
                 $('#so-buoi-hoc').val(0);
             } else {
-                $('#hoc_phi').val($(this).val() * inputHocPhi);
+                let hocPhiDefault = soBuoiHoc * inputHocPhi;
+                // Call to server get discount of class
+                $.ajax({
+                    url: '{{ url('/admin/chiet-khau/chi-tiet') }}',
+                    type: 'GET',
+                    data: {
+                        id: $('#select_class').val()
+                    },
+                    success: function (response) {
+                        if (response.code === 200) {
+                            // Fill hoc_phi
+                            for (let i = 0; i < response.data.length; i++) {
+                                if (soBuoiHoc == response.data[i].so_buoi_hoc) {
+                                    let chietKhau = (hocPhiDefault * response.data[i].chiet_khau) / 100;
+                                    $('#hoc_phi').val(hocPhiDefault - chietKhau);
+                                    $('#bill-hoc-phi').text(hocPhiDefault - chietKhau);
+                                    break;
+                                } else {
+                                    $('#hoc_phi').val(soBuoiHoc * inputHocPhi);
+                                    $('#bill-hoc-phi').text(soBuoiHoc * inputHocPhi);
+                                }
+                            }
+                        }
+                    }
+                });
             }
         });
     </script>

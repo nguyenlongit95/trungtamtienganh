@@ -278,7 +278,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <table class="table table-bordered">
                             <thead>

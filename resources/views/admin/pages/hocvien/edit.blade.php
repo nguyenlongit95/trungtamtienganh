@@ -372,6 +372,7 @@
             $('#so-buoi-hoc').on('keyup', function (evt) {
                 let tmpID = $('#tmp-id').val();
                 let hocPhiBasic = $('#txt_hoc_phi_' + tmpID).val();
+                // Check discount here!
                 $('#hoc-phi').val(hocPhiBasic * $(this).val());
                 $('#bill-hoc-phi').text(hocPhiBasic * $(this).val());
             })

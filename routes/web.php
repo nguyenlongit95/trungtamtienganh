@@ -129,4 +129,8 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::post('/add', 'CanhBaoController@store');
         Route::get('{id}/delete', 'CanhBaoController@destroy');
     });
+
+    Route::group(['prefix' => 'chiet-khau'], function () {
+        Route::get('/chi-tiet', 'HocPhiController@detailChietKhau');
+    });
 });

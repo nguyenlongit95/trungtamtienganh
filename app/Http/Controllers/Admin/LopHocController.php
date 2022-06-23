@@ -145,17 +145,32 @@ class LopHocController extends Controller
         ));
     }
 
+    /**
+     * Controller function add multi student to classes
+     *
+     * @param Request $request
+     * @param int $id lop_hoc
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addMultiStudent(Request $request, $id)
     {
         $param = $request->all();
         if (isset($param['studentNotInClass'])) {
             $lopHoc = $this->lopHocRepository->find($id);
+            $chietKhau = DB::table('chiet_khau')->where('ma_lop_hoc', $lopHoc->id)
+                ->select('so_buoi_hoc', 'chiet_khau')->pluck('chiet_khau', 'so_buoi_hoc')
+                ->toArray();
             $monHoc = $this->monHocRepository->find($lopHoc->ma_mon_hoc);
             if (is_array($param['studentNotInClass'])) {
                 foreach ($param['studentNotInClass'] as $value) {
                     try {
                         // Calculation hoc phi
                         $calHocPhi = $lopHoc->hoc_phi * $param['so_buoi_hoc_' . $value];
+                        if (array_key_exists($param['so_buoi_hoc_' . $value], $chietKhau)) {
+                            // Calculation discount
+                            $discountVal = $chietKhau[$param['so_buoi_hoc_' . $value]];
+                            $calHocPhi = $calHocPhi - (($calHocPhi * $discountVal) / 100);
+                        }
                         // init param qua trinh hoc
                         $quaTrinhHoc['ma_mon_hoc'] = $monHoc->id;
                         $quaTrinhHoc['ma_lop_hoc'] = $lopHoc->id;
@@ -179,7 +194,6 @@ class LopHocController extends Controller
                         Log::error($exception->getMessage());
                         return redirect()->back()->with('status', 'Có lỗi hệ thống, kiểm tra lại kỹ thuật!');
                     }
-
                 }
             }
         }
