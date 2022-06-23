@@ -129,7 +129,7 @@
                                         <input type="number" class="form-control" name="chiet_khau" id="chiet_khau" placeholder="9">
                                     </div>
                                     <div class="col-2 float-left">
-                                        <label for="create-chiet-khau" class="text-danger">Click vào nút để thêm chiết khấu *</label><br>
+                                        <label for="create-chiet-khau" class="text-danger">Click vào nút để thêm *</label><br>
                                         <input type="submit" class="btn btn-primary" id="create-chiet-khau" value="Thêm giá trị chiết khấu">
                                     </div>
                                 </form>
