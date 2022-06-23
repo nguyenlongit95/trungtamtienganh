@@ -85,8 +85,8 @@
                                 <div class="col-2">{{ $value->ma_lop }}</div>
                                 <div class="col-2">{{ $value->so_hoc_vien }}</div>
                                 <div class="col-2">{{ $value->so_buoi_hoc }}</div>
-                                <div class="col-3">{{ number_format($value->hoc_phi, 0) }}</div>
-                                <div class="col-1">
+                                <div class="col-2">{{ number_format($value->hoc_phi, 0) }}</div>
+                                <div class="col-2">
                                     <button data-toggle="collapse" data-target="#lop_hoc_{{ $value->id }}" class="btn btn-secondary">Xem chiết khấu</button>
                                 </div>
                             </div>
