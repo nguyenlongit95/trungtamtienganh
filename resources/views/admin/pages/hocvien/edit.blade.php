@@ -135,7 +135,7 @@
                                                     <td>{{ $hocVien->ten }}</td>
                                                     <td class="text-center">{{ $value->lop_hoc }}</td>
                                                     <td class="text-center">{{ number_format($value->hoc_phi, 0) }}</td>
-                                                    <td class="text-center">{{ $value->so_buoi_hoc }}</td>
+                                                    <td class="text-center">{{ round($value->so_buoi_hoc) }}</td>
                                                     <td class="text-center">
                                                         @if($value->tinh_trang_nop_hoc_phi === 0)
                                                             <p class="text-danger">Chưa nộp học phí</p>
