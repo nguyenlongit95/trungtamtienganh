@@ -374,7 +374,7 @@
                         id: $('#select_class').val()
                     },
                     success: function (response) {
-                        if (response.code === 200) { console.log(response.data.length);
+                        if (response.code === 200) {
                             // Fill hoc_phi
                             if (response.data.length > 0) {
                                 for (let i = 0; i < response.data.length; i++) {
