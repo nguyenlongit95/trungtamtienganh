@@ -59,6 +59,7 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::get('/check-voucher', 'HocVienController@checkVoucher');
         Route::get('/get-lop-hoc-bill', 'HocVienController@getLopHocBill');
         Route::get('/get-lop-hoc-using-qua-hoc-phi', 'HocVienController@getLophocUsingHocPhi');
+        Route::get('/{id}/delete', 'HocVienController@deleteHocVien');
     });
 
     Route::group(['prefix' => 'mon-hoc'], function () {

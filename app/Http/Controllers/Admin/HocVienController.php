@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Validations\Validation;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HocVienController extends Controller
 {
@@ -57,7 +58,36 @@ class HocVienController extends Controller
     public function index()
     {
         $hocVien = $this->hocvienRepository->getAll(config('const.paginate'), 'DESC');
+        if (!empty($hocVien)) {
+            foreach ($hocVien as $value) {
+                $quaTrinhHoc = DB::table('qua_trinh_hoc')->where('ma_hoc_vien', $value->id)->count();
+                if ($quaTrinhHoc > 0) {
+                    $value->in_class = true;
+                } else {
+                    $value->in_class = false;
+                }
+            }
+        }
         return view('admin.pages.hocvien.index', compact('hocVien'));
+    }
+
+    public function deleteHocVien(Request $request, $id) 
+    {
+        $hocVien = $this->hocvienRepository->find($id);
+        if (empty($hocVien)) {
+            return redirect()->back()->with('status', 'Không tìm thấy học viên');
+        }
+        $quaTrinhHoc = DB::table('qua_trinh_hoc')->where('ma_hoc_vien', $hocVien->id)->count();
+        if ($quaTrinhHoc > 0) {
+            return redirect()->back()->with('status', 'Học viên đang trong lớp học, không thể xóa!');
+        }
+        try {
+            DB::table('hoc_vien')->where('id', $hocVien->id)->delete();
+            return redirect()->back()->with('status', 'Xóa học viên thành công.');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('status', 'Có lỗi sảy ra, hãy kiểm tra lại hệ thống.');
+        }
     }
 
     /**
