@@ -71,6 +71,11 @@ class HocVienController extends Controller
         return view('admin.pages.hocvien.index', compact('hocVien'));
     }
 
+    /**
+     * Delete a student.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function deleteHocVien(Request $request, $id) 
     {
         $hocVien = $this->hocvienRepository->find($id);
