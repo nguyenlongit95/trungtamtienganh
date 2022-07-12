@@ -74,8 +74,8 @@
                         <div class="col-2">Mã lớp</div>
                         <div class="col-2">Số học viên</div>
                         <div class="col-2">Số buổi học</div>
-                        <div class="col-3">Học phí theo buổi</div>
-                        <div class="col-1">Chiết khấu</div>
+                        <div class="col-2">Học phí theo buổi</div>
+                        <div class="col-2">Chiết khấu</div>
                     </div>
                     <br>
                     @if(!empty($lopHoc))
@@ -85,8 +85,8 @@
                                 <div class="col-2">{{ $value->ma_lop }}</div>
                                 <div class="col-2">{{ $value->so_hoc_vien }}</div>
                                 <div class="col-2">{{ $value->so_buoi_hoc }}</div>
-                                <div class="col-3">{{ number_format($value->hoc_phi, 0) }}</div>
-                                <div class="col-1">
+                                <div class="col-2">{{ number_format($value->hoc_phi, 0) }}</div>
+                                <div class="col-2">
                                     <button data-toggle="collapse" data-target="#lop_hoc_{{ $value->id }}" class="btn btn-secondary">Xem chiết khấu</button>
                                 </div>
                             </div>
@@ -105,12 +105,12 @@
                                                 <input type="number" class="form-control" name="chiet_khau" id="chiet_khau" value="{{ $ck->chiet_khau }}">
                                             </div>
                                             <div class="col-2 float-left">
-                                                <label for="create-chiet-khau">Click vào nút để thêm chiết khấu <span class="text-danger">*</span></label><br>
-                                                <input type="submit" class="btn btn-warning" id="create-chiet-khau" value="Chỉnh sửa giá trị chiết khấu">
+                                                <label for="create-chiet-khau">Click vào nút để thêm <span class="text-danger">*</span></label><br>
+                                                <input type="submit" class="btn btn-warning" id="create-chiet-khau" value="Chỉnh sửa">
                                             </div>
                                             <div class="col-2 float-left">
-                                                <label for="create-chiet-khau">Click vào nút để xoá chiết khấu <span class="text-danger">*</span></label><br>
-                                                <a href="{{ url('/admin/hoc-phi/xoa-chiet-khau/' . $ck->id) }}" class="btn btn-danger">Xoá chiết khấu</a>
+                                                <label for="create-chiet-khau">Click vào nút để xoá <span class="text-danger">*</span></label><br>
+                                                <a href="{{ url('/admin/hoc-phi/xoa-chiet-khau/' . $ck->id) }}" class="btn btn-danger">Xoá</a>
                                             </div>
                                         </form>
                                         @endif
@@ -129,7 +129,7 @@
                                         <input type="number" class="form-control" name="chiet_khau" id="chiet_khau" placeholder="9">
                                     </div>
                                     <div class="col-2 float-left">
-                                        <label for="create-chiet-khau" class="text-danger">Click vào nút để thêm chiết khấu *</label><br>
+                                        <label for="create-chiet-khau" class="text-danger">Click vào nút để thêm *</label><br>
                                         <input type="submit" class="btn btn-primary" id="create-chiet-khau" value="Thêm giá trị chiết khấu">
                                     </div>
                                 </form>

@@ -76,6 +76,8 @@
                                         <td class="text-center">
                                             <a href="{{ url('/admin/hoc-vien/' . $hv->id . '/edit') }}" title="Chỉnh sửa {{ $hv->name }}"><i class="fas fa-pen"></i></a>
                                             |
+                                            <a href="{{ url('/admin/hoc-vien/' . $hv->id . '/delete') }}"><i class="fa fa-trash"></i></a>
+                                            |
                                             <a onclick="warningStudent( {{ $hv->id }} )" href="#" title="Chỉnh sửa {{ $hv->name }}"><i class="fa fa-exclamation-triangle"></i></a>
                                         </td>
                                     </tr>
