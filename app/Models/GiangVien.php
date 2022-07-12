@@ -16,5 +16,7 @@ class GiangVien extends Model
         'ma_mon_hoc',
         'truong_dai_hoc',
         'so_dien_thoai',
+        'avatar',
+        'hien_thi',
     ];
 }

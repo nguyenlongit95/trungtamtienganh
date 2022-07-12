@@ -14,6 +14,9 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
+            <div class="info">
+                <a href="#" class="d-block">Quản lý hệ thống</a>
+            </div>
             <li class="nav-item">
                 <a href="{{ url('/admin') }}" class="nav-link">
                     <i class="fas fa-chart-line"></i>
@@ -70,6 +73,27 @@
                     <p>Cảnh báo</p>
                 </a>
             </li>
+            <br>
+            <div class="info">
+                <a href="#" class="d-block">Quản lý website</a>
+            </div>
+            <li class="nav-item">
+                <a href="{{ url('/admin/canh-bao/') }}" class="nav-link">
+                    <i class="fa fa-pager"></i>
+                    <p>Quản lý bài viết</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('/admin/canh-bao/') }}" class="nav-link">
+                    <i class="fa fa-images"></i>
+                    <p>Quản lý sliders</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('/admin/canh-bao/') }}" class="nav-link">
+                    <i class="fa fa-envelope-open-text"></i>
+                    <p>Quản lý slogan</p>
+                </a>
             </li>
         </ul>
     </nav>

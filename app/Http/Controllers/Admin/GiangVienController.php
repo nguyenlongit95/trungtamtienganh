@@ -10,6 +10,7 @@ use App\Validations\Validation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GiangVienController extends Controller
@@ -70,14 +71,21 @@ class GiangVienController extends Controller
         if (Auth::user()->role != 0) {
             return redirect('/admin/giang-vien')->with('status', config('langVN.permission.err'));
         }
-
         $param = $request->all();
         Validation::validationGiangVien($request);
+        try {
+            if ($request->hasFile('avatar')) {
+                $file = $request->file('avatar');
+                $file->move('avatars' , $file->getClientOriginalName());
+                $param['avatar'] = $file->getClientOriginalName();
+            }
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
         $create = $this->giangVienRepository->create($param);
         if ($create) {
             return redirect('/admin/giang-vien/')->with('status', config('langVN.add.success'));
         }
-
         return redirect('/admin/giang-vien/')->with('status', config('langVN.add.failed'));
     }
 
@@ -116,18 +124,25 @@ class GiangVienController extends Controller
         if (Auth::user()->role != 0) {
             return redirect('/admin/giang-vien')->with('status', config('langVN.permission.err'));
         }
-
         $param = $request->all();
         Validation::validationGiangVien($request);
         $giangVien = $this->giangVienRepository->find($id);
         if (empty($giangVien)) {
             return redirect()->back()->with('status', config('langVN.find_err'));
         }
+        if ($request->hasFile('avatar')) {
+            try {
+                $file = $request->file('avatar');
+                $file->move('avatars' , $file->getClientOriginalName());
+                $param['avatar'] = $file->getClientOriginalName();
+            } catch (\Exception $exception) {
+                Log::error($exception->getMessage());
+            }
+        }
         $update = $this->giangVienRepository->update($param, $id);
         if ($update) {
             return redirect('/admin/giang-vien/')->with('status', config('langVN.update.success'));
         }
-
         return redirect('/admin/giang-vien/')->with('status', config('langVN.update.failed'));
     }
 

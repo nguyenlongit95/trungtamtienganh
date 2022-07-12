@@ -68,3 +68,4 @@ Spec change
 - Tính tỷ lệ chiết khấu theo buổi: Thêm 1 bảng chiết khấu trong db
 - Đối với học viên cũ khi thêm vào lớp học sẽ cho nhập số buổi học và tính học phí theo số buổi học đó
 
+- Thêm trường avatar, hien_thi vào bảng giang_vien
