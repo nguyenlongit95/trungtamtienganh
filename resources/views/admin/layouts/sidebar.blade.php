@@ -78,19 +78,19 @@
                 <a href="#" class="d-block">Quản lý website</a>
             </div>
             <li class="nav-item">
-                <a href="{{ url('/admin/canh-bao/') }}" class="nav-link">
+                <a href="{{ url('/admin/bai-viet/') }}" class="nav-link">
                     <i class="fa fa-pager"></i>
                     <p>Quản lý bài viết</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/admin/canh-bao/') }}" class="nav-link">
+                <a href="{{ url('/admin/sliders/') }}" class="nav-link">
                     <i class="fa fa-images"></i>
                     <p>Quản lý sliders</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/admin/canh-bao/') }}" class="nav-link">
+                <a href="{{ url('/admin/slogan/') }}" class="nav-link">
                     <i class="fa fa-envelope-open-text"></i>
                     <p>Quản lý slogan</p>
                 </a>

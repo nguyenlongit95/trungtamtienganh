@@ -134,4 +134,14 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
     Route::group(['prefix' => 'chiet-khau'], function () {
         Route::get('/chi-tiet', 'HocPhiController@detailChietKhau');
     });
+
+    Route::group(['prefix' => 'bai-viet'], function () {
+        Route::get('/','BaiVietController@index');
+        Route::post('/search','BaiVietController@search');
+        Route::get('/add','BaiVietController@create');
+        Route::post('/store', 'BaiVietController@store');
+        Route::get('/edit/{id}', 'BaiVietController@edit');
+        Route::post('/update/{id}', 'BaiVietController@update');
+        Route::get('/delete/{id}', 'BaiVietController@delete');
+    });
 });
