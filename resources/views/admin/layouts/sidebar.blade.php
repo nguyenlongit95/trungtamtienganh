@@ -86,13 +86,25 @@
             <li class="nav-item">
                 <a href="{{ url('/admin/sliders/') }}" class="nav-link">
                     <i class="fa fa-images"></i>
-                    <p>Quản lý sliders</p>
+                    <p>Quản lý banner</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url('/admin/slogan/') }}" class="nav-link">
                     <i class="fa fa-envelope-open-text"></i>
                     <p>Quản lý slogan</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('/admin/about/') }}" class="nav-link">
+                    &nbsp;<i class="fa fa-info"></i>
+                    <p> &nbsp; Quản lý mục giới thiệu</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('/admin/says/') }}" class="nav-link">
+                    <i class="fa fa-comment-alt"></i>
+                    <p>Quản lý nhận xét người dùng</p>
                 </a>
             </li>
         </ul>

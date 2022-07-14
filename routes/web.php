@@ -144,4 +144,28 @@ Route::group(['middleware' => 'checkAdminLogin', 'prefix' => 'admin', 'namespace
         Route::post('/update/{id}', 'BaiVietController@update');
         Route::get('/delete/{id}', 'BaiVietController@delete');
     });
+
+    Route::group(['prefix' => 'sliders'], function () {
+        Route::get('/', 'SliderController@index');
+        Route::post('/change', 'SliderController@change');
+    });
+
+    Route::group(['prefix' => 'slogan'], function () {
+         Route::get('/', 'SloganController@index');
+         Route::post('/update', 'SloganController@update');
+    });
+
+    Route::group(['prefix' => 'about'], function () {
+        Route::get('/', 'AboutController@index');
+        Route::post('/update', 'AboutController@update');
+    });
+
+    Route::group(['prefix' => 'says'], function () {
+        Route::get('/', 'SayController@index');
+        Route::get('/add', 'SayController@create');
+        Route::post('/store', 'SayController@store');
+        Route::get('/edit/{id}', 'SayController@edit');
+        Route::post('/update/{id}', 'SayController@update');
+        Route::get('/delete/{id}', 'SayController@delete');
+    });
 });
