@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', '\App\Http\Controllers\FrontEnd\FrontendController@index');
+Route::get('/detail', '\App\Http\Controllers\FrontEnd\FrontendController@detail');
 
 Route::get('/update-password-admin', function () {
     dd(\Illuminate\Support\Facades\Hash::make(12345678));
