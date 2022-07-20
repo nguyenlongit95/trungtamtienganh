@@ -67,7 +67,7 @@
                             <p>- Thông tin chi tiết sẽ hiển thị tại trang chi tiết bài viết.</p>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <input type="submit" name="create" class="btn btn-primary float-right" value="Thêm bài viết">
+                                <input type="submit" name="create" class="btn btn-primary float-right" value="Chỉnh sửa">
                             </div>
                         </div>
                     </div>

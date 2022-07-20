@@ -94,7 +94,7 @@ class SayController extends Controller
                     'ten' => $param['ten'],
                     'noi_dung' => $param['noi_dung'],
                 ]);
-                return redirect('/admin/says/add')->with('status', 'Chỉnh sửa nhận xét thành công.');
+                return redirect('/admin/says/edit/' . $id)->with('status', 'Chỉnh sửa nhận xét thành công.');
             }
         } catch (\Exception $exception) {
             Log::error($exception);

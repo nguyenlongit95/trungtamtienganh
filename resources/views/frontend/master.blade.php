@@ -22,12 +22,6 @@ Author URL: https://www.facebook.com/nguyenlongit1308/
 <!--//header-->
 @yield('content')
 
-<!-- testimonials -->
-@include('frontend.layouts.say')
-<!--//testimonials-->
-<!-- blog section -->
-@include('frontend.layouts.block')
-<!-- //blog section -->
 <!-- footer -->
 @include('frontend.layouts.footer')
 <!-- //footer -->
