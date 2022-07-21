@@ -5,39 +5,20 @@
                 <h3 class="title-big">Giới thiệu các lớp học</h3>
             </div>
             <div class="row mt-sm-5 pt-lg-2">
-                <div class="col-lg-4 col-sm-6">
-                    <div class=" grids5-info">
-                        <a href="#blog"><img src="{{ asset('frontend/assets/images/blog1.jpg') }}" alt="" /></a>
-                        <div class="blog-info">
-                            <h5>October 3, 2019</h5>
-                            <h4><a href="#blog">Mostly Interesting UX/UI Designing</a></h4>
-                            <p>Donec sed tempus enim, a congue risus. Pellentesque euismod massa a quam
-                                viverra interdum.</p>
+                @if(!empty($blogs))
+                    @foreach($blogs as $blog)
+                    <div class="col-lg-4 col-sm-6">
+                        <div class=" grids5-info">
+                            <a href="#blog"><img src="{{ asset('frontend/assets/images/blog1.jpg') }}" alt="" /></a>
+                            <div class="blog-info">
+                                <h5>{{ \Carbon\Carbon::create($blog->created_at)->format('d-m-Y') }}</h5>
+                                <h4><a href="{{ url('/detail/' . $blog->id) }}">{{ $blog->title }}</a></h4>
+                                <p>{{ $blog->info }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mt-sm-0 mt-4">
-                    <div class=" grids5-info">
-                        <a href="#blog"><img src="{{ asset('frontend/assets/images/blog2.jpg') }}" alt="" /></a>
-                        <div class="blog-info">
-                            <h5>October 6, 2019</h5>
-                            <h4><a href="#blog">Growth Mindsets for Online Learners </a></h4>
-                            <p>Donec sed tempus enim, a congue risus. Pellentesque euismod massa a quam
-                                viverra interdum.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6  mt-lg-0 mt-4">
-                    <div class=" grids5-info">
-                        <a href="#blog"><img src="{{ asset('frontend/assets/images/blog3.jpg') }}" alt="" /></a>
-                        <div class="blog-info">
-                            <h5>October 7, 2019</h5>
-                            <h4><a href="#blog">Super fast & user friendly interface</a></h4>
-                            <p>Donec sed tempus enim, a congue risus. Pellentesque euismod massa a quam
-                                viverra interdum.</p>
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>
