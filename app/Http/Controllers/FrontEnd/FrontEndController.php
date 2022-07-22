@@ -51,10 +51,21 @@ class FrontEndController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detail()
+    public function detail(Request $request, $id)
     {
-        return view('frontend.detail');
+        $baiViet = DB::table('bai_viet')->where('id', $id)->first();
+        return view('frontend.detail', [
+            'slider' => $this->slider,
+            'slogan' => $this->slogan,
+            'about' => $this->about,
+            'says' => $this->say,
+            'teachers' => $this->teachers,
+            'blogs' => $this->blog,
+            'baiViet' => $baiViet
+        ]);
     }
 }

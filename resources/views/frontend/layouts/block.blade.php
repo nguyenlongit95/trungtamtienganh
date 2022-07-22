@@ -12,7 +12,7 @@
                             <a href="#blog"><img src="{{ asset('frontend/assets/images/blog1.jpg') }}" alt="" /></a>
                             <div class="blog-info">
                                 <h5>{{ \Carbon\Carbon::create($blog->created_at)->format('d-m-Y') }}</h5>
-                                <h4><a href="{{ url('/detail/' . $blog->id) }}">{{ $blog->title }}</a></h4>
+                                <h4><a href="{{ url('/detail/' . $blog->id . '/chi-tiet.html') }}">{{ $blog->title }}</a></h4>
                                 <p>{{ $blog->info }}</p>
                             </div>
                         </div>
