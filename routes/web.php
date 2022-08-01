@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', '\App\Http\Controllers\FrontEnd\FrontendController@index');
-Route::get('/detail/{id}/chi-tiet.html', '\App\Http\Controllers\FrontEnd\FrontendController@detail');
+//Route::group(['prefix' => '/', 'namespace' => 'FrontEnd'], function () {
+    Route::get('/', '\App\Http\Controllers\FrontEnd\LoginController@index');
+    Route::get('/detail/{id}/chi-tiet.html', '\App\Http\Controllers\FrontEnd\LoginController@detail');
+//});
 
 Route::get('/update-password-admin', function () {
     dd(\Illuminate\Support\Facades\Hash::make(12345678));

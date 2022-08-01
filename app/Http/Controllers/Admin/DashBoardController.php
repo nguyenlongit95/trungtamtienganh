@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Factory\NganLuong\NganLuong;
-use App\Factory\Paygates\VNPAY\VNPAY;
-use App\Factory\Paygates\Paypal\paypal_entry;
 use App\Http\Controllers\Controller;
 use App\Models\GiangVien;
 use App\Models\HocPhi;
@@ -101,7 +98,8 @@ class DashBoardController extends Controller
     {
         $listLuongGiangVien = [];
         foreach ($arrListMonth as $key=>$value) {
-            $salary = LuongGiangVien::whereMonth('ngay_tra_luong', $value)->sum('luong');
+            $salary = DB::table('luong_giang_vien')->whereMonth('ngay_tra_luong', $value)
+                ->sum('luong');
             $listLuongGiangVien[$value] = (int) $salary;
         }
 
