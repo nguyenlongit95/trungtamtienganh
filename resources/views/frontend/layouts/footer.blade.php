@@ -25,15 +25,15 @@
                         <div class="column2">
                             <div class="href1">
                                 <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                                <a href="mailto:info@example.com">info@example.com</a>
+                                <a href="mailto:luyenthigermedu@gmail.com">luyenthigermedu@gmail.com</a>
                             </div>
                             <div class="href2"><span class="fa fa-phone" aria-hidden="true"></span>
-                                <a href="tel:+44-000-888-999">0383989768</a>
+                                <a href="tel:+0383989768">0383989768</a>
                             </div>
                             <div>
                                 <p class="contact-para">
                                     <span class="fa fa-map-marker" aria-hidden="true"></span>
-                                    A56 - Khu Tái Định Cư LK 19A - LK19B,X7, Phường Dương Nội, Quận Hà Đông, Thành Phố Hà Nội
+                                    A56 - Khu Tái Định Cư LK 19A - LK19B, X7, Phường Dương Nội, Quận Hà Đông, Thành Phố Hà Nội
                                 </p>
                             </div>
                         </div>
