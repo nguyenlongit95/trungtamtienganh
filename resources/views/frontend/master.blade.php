@@ -9,6 +9,25 @@ Author URL: https://www.facebook.com/nguyenlongit1308/
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Germ - Education - Home</title>
+
+    <meta http-equiv="content-language" content="vi">
+    <meta name="robots" content="index,follow" />
+
+    <meta name="description" content="Anh Ngữ Germ Education" />
+    <meta name="keywords" content="Germ" />
+    <meta http-equiv="refresh" content="300">
+    <meta property="og:title" content="Anh Ngữ Germ Education">
+    <meta property="og:type" content="web_site">
+    <meta property="og:url" content="https://tienganhgerm.com/" />
+    <meta property="og:description" content="Anh Ngữ Germ Education">
+    <meta property="og:site_name" content="Anh Ngữ Germ Education">
+    <meta property="og:updated_time" content="{{ \Carbon\Carbon::now() }}" />
+    <!-- Twitter Card data -->
+    <meta name="twitter:site" content="Germ">
+    <meta name="twitter:title" content="Anh Ngữ Germ Education">
+    <meta name="twitter:description" content="Anh Ngữ Germ Education">
+    <meta name="twitter:creator" content="Germ">
+
     <!-- google-fonts -->
     <link href="//fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
           rel="stylesheet">
