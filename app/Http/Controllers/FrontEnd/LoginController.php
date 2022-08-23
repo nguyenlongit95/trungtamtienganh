@@ -165,7 +165,7 @@ class LoginController extends Controller
             ->join('mon_hoc', 'mon_hoc.id', '=', 'giang_vien.ma_mon_hoc')
             ->orderBy('giang_vien.id', 'DESC')->select(
                 'giang_vien.ten as ten_giang_vien', 'giang_vien.avatar as avatar',
-                'mon_hoc.ten as ten_mon_hoc'
+                'mon_hoc.ten as ten_mon_hoc', 'giang_vien.truong_dai_hoc as truong_dai_hoc'
             )->get();
         $this->blog = DB::table('bai_viet')->where('display', 1)->whereNull('deleted_at')
             ->orderBy('id', 'DESC')->get();

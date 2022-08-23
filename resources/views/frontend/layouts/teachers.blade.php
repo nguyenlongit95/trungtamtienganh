@@ -22,6 +22,7 @@
                         <div class="right-team-9">
                             <h6><a href="#team" class="title-team-32">{{ $teacher->ten_giang_vien }}</a></h6>
                             <p class="sm-text-32">{{ $teacher->ten_mon_hoc }}</p>
+                            <p class="text-center">{{ $teacher->truong_dai_hoc }}</p>
                         </div>
                     </div>
                     @endforeach

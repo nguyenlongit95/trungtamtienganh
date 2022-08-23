@@ -8,9 +8,7 @@
                 <div class="row sub-columns">
                     <div class="col-lg-4 col-md-6 col-sm-8 sub-one-left">
                         <h6>Giới thiệu </h6>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                            doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab.</p>
+                        <p>{{ $about->content }}</p>
                         <div class="columns-2">
                             <ul class="social">
                                 <li>

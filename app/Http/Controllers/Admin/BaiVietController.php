@@ -113,7 +113,7 @@ class BaiVietController extends Controller
             return redirect('/admin/bai-viet/')->with('status', 'Chỉnh sửa bài viết thành công!');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
-            return redirect('/admin/bai-viet/create')->with('status', 'Có lỗi sảy ra, hãy kiểm tra lại hệ thống!');
+            return redirect('/admin/bai-viet/edit/' . $id)->with('status', 'Có lỗi sảy ra, hãy kiểm tra lại hệ thống!');
         }
     }
 
